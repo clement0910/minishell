@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:01:33 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/04 11:12:20 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 12:52:05 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ int	get_path(char **env, char ***path)
 	char *str;
 
 	x = 0;
-	while (ft_strnstr(env[x], "PATH", 4) == NULL)
+	while (env[x] && ft_strnstr(env[x], "PATH=", 5) == NULL)
 		x++;
-	//printf("BEFORE: [%s]\n", ft_strnstr(env[x], "PATH", 4));
-	str = ft_strrchr(ft_strnstr(env[x], "PATH", 4), '=') + 1;
-	//trim ?
-	//printf("final [%s]\n", str);
-	*path = ft_split(str, ':');
+	if (!env[x])
+		return (return_message_int("Failed to find path in env", 1));
+	if (!(str = ft_strtrim(env[x], "PATH=")))
+		return (return_message_int("Impossible to get the Path", 1));
+	if (!(*path = ft_split(str, ':')))
+	{
+		free(str);
+		return (return_message_int("Failed to get all path", 1));
+	}
+	free(str);
 	return (0);
 }
 
