@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:19:22 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/03 15:58:01 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 12:57:30 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,17 @@
 
 int	free_shell(t_global *glb)
 {
-	ft_free_tab(glb->env);
+	free(glb->buf);
 	ft_free_tab(glb->path);
-	free(glb->buf);
-	free(glb->main_command);
-	ft_free_tab(glb->command);
-	free(glb->buf);
 	if (glb)
 		free(glb);
 	return (1);
 }
 
-int	return_message_int(char *str, int x)
+int	return_message_int(char *str, int ret)
 {
 	ft_putendl_fd(str, 1);
-	return (x);
+	return (ret);
 }
 
 int return_strerror(void)
