@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 12:40:33 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 16:14:38 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	execve_command(char *path_command, char **command, char **envp, int *ret)
 		waitpid(pid, ret, 0);
 		*ret = WEXITSTATUS(*ret);
 	}
-	
 	return (*ret);
 }
 
@@ -94,3 +93,4 @@ int main(int ac, char **av, char **envp)
 		return (free_shell(glb));
 	return (0);
 }
+

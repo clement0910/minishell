@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:13:38 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 12:21:44 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 15:43:30 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define SHELL_H
 
 #include "libft.h"
-#include <sys/stat.h>
+#include <sys/stat.h> //stat
 #include <string.h>
 #include <errno.h>
+#include <dirent.h> //dir
+
 typedef struct s_global
 {
 	char **env;
@@ -27,6 +29,7 @@ typedef struct s_global
 	char *cwd;
 	int ret;
 	struct stat file;
+	char *home;
 }				t_global;
 
 
@@ -44,4 +47,6 @@ int			init_shell(t_global *glb);
 int			built_in_command(t_global *glb);
 int	real_excve_command(char *command, t_global *glb);
 int			start_shell(t_global *glb);
+int			built_in_cd(t_global *glb);
+int			get_home(char **env, char **home);
 #endif

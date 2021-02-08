@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_quit.c                                       :+:      :+:    :+:   */
+/*   shell_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/03 14:19:22 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 15:36:25 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/08 12:48:53 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/08 16:15:18 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	free_shell(t_global *glb)
+int	built_in_cd(t_global *glb)
 {
-	free(glb->main_command);
-	ft_free_tab(glb->command);
-	free(glb->home);
-	ft_free_tab(glb->path);
-	free(glb->buf);
-	if (glb)
-		free(glb);
-	return (glb->ret);
-}
-
-int	return_message_int(char *str, int ret)
-{
-	ft_putendl_fd(str, 1);
-	return (ret);
-}
-
-int return_strerror(void)
-{
-	ft_putendl_fd(strerror(errno), 1);
-	return (1);
+	if (!glb->command[1])
+	{
+		if (chdir(glb->home) == -1)
+			return(return_strerror());
+	}
+	else 
+	{
+		if (chdir(glb->command[1]) == -1)
+		{
+			return_strerror();
+			return(0);
+		}
+	}
+	return (0);
 }

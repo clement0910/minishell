@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:02:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 12:31:20 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 15:43:18 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	init_shell(t_global *glb)
 		return(return_message_int("Failed to init buf", 1));
 	if (get_path(glb->env, &glb->path))
 		return (1);
+	if (get_home(glb->env, &glb->home))
+		return (1);
+	printf("home: %s\n", glb->home);
 	if (get_date(glb)) //may cause problems
 		return (glb->ret);
+	ft_printf("> ");
 	return (0);
 }
