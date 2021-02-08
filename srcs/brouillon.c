@@ -5,56 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/05 11:10:17 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/03 14:00:02 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/05 10:07:00 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	execve_command(t_global *glb, char *path_command)
+int	excve_command(char *command, t_pid pid)
 {
+	int ret;
+	struct stat file_stat;
+
+	if (stat(command, &file_stat) == 0)
+		return (1); //command msg
 	if ((glb->pid = fork()) == -1)
 		return(return_strerror());
 	if (glb->pid == 0)
 	{
-		if ((glb->ret = execve(path_command, glb->command, glb->env)) == -1)
-			exit(glb->ret);
+		if ((ret = execve(command, NULL, NULL)) == -1)
+			exit (ret);
 	}
 	else
 	{
-		waitpid(glb->pid, &glb->ret, 0);
-		glb->ret = WEXITSTATUS(glb->ret);
+		waitpid(glb->pid, &ret, 0);
+		ret = WEXITSTATUS(ret);
 	}
-	printf("??\n");
-	return (glb->ret);
+	return (ret);
 }
 
-int search_command_path(t_global *glb)
+int	excve_command(t_global *glb)
 {
 	int x;
-	int command;
 	char *path_command;
 
 	x = 0;
-	command = 0;
 	if (!(path_command = ft_strdup(glb->main_command)))
 		return (1);
-	while(glb->path[x])
+	while ((execve(path_command, glb->command, glb->env) == -1))
 	{
-		if (stat(path_command, &glb->file) == 0)
-		{
-			command = 1;
-			execve_command(glb, path_command);	
-		}
+		printf("%s\n", path_command);
 		free(path_command);
 		if (!(path_command = ft_strjoin(ft_strjoin(glb->path[x], "/"), glb->main_command)))
 			return (1);
 		x++;
 	}
-	//excve faut faire pour avoir le exit
-	printf("number: %d\n", command);
-	free(path_command);
+}
+
+int	execute_command(t_global *glb)
+{
+	int x;
+	int error;
+	
+	x = 0;
+	if ((glb->pid = fork()) == -1)
+		return(return_strerror());
+	if (glb->pid == 0)
+	{
+		if (excve_command(glb))
+			return (1);
+	}
+	else
+		waitpid(glb->pid, &error, 0);
 	return (0);
 }
 
@@ -67,7 +79,7 @@ int	launch_shell(t_global *glb)
 			return (1);
 		if (built_in_command(glb) != 0 && !(glb->buf[0] == '\n'))
 		{
-			if (search_command_path(glb))
+			if (execute_command(glb))
 				return (1);
 		}
 		free(glb->command);

@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/05 11:10:17 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/05 11:09:15 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	execve_command(t_global *glb, char *path_command)
 {
-	if ((glb->pid = fork()) == -1)
-		return(return_strerror());
 	if (glb->pid == 0)
 	{
 		if ((glb->ret = execve(path_command, glb->command, glb->env)) == -1)
@@ -26,7 +24,7 @@ int	execve_command(t_global *glb, char *path_command)
 		waitpid(glb->pid, &glb->ret, 0);
 		glb->ret = WEXITSTATUS(glb->ret);
 	}
-	printf("??\n");
+	printf("yolo\n");
 	return (glb->ret);
 }
 
@@ -40,19 +38,32 @@ int search_command_path(t_global *glb)
 	command = 0;
 	if (!(path_command = ft_strdup(glb->main_command)))
 		return (1);
-	while(glb->path[x])
+	if ((glb->pid = fork()) == -1)
+		return(return_strerror());
+	if (glb->pid == 0)
 	{
-		if (stat(path_command, &glb->file) == 0)
+		while(glb->path[x])
 		{
-			command = 1;
-			execve_command(glb, path_command);	
+			if (stat(path_command, &glb->file) == 0)
+			{
+				command = 1;
+				if ((glb->ret = execve(path_command, glb->command, glb->env)) == -1)
+					exit(glb->ret);	
+			}
+			free(path_command);
+			if (!(path_command = ft_strjoin(ft_strjoin(glb->path[x], "/"), glb->main_command)))
+				return (1);
+			x++;
 		}
-		free(path_command);
-		if (!(path_command = ft_strjoin(ft_strjoin(glb->path[x], "/"), glb->main_command)))
-			return (1);
-		x++;
+		printf("??\n");
+	}
+	else
+	{
+		waitpid(glb->pid, &glb->ret, 0);
+		glb->ret = WEXITSTATUS(glb->ret);
 	}
 	//excve faut faire pour avoir le exit
+
 	printf("number: %d\n", command);
 	free(path_command);
 	return (0);

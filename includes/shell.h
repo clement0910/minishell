@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:13:38 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/04 16:41:29 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 09:04:44 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_global
 	char *main_command;
 	char *cwd;
 	pid_t pid;
+	int ret;
+	struct stat file;
 }				t_global;
 
 
