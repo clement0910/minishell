@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:01:33 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/04 12:52:05 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 12:37:02 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ int	get_path(char **env, char ***path)
 
 int	parse_command(t_global *glb)
 {
+	if (!glb->buf) //?
+		return (1);
 	if (!(glb->command = ft_split((const char*)glb->buf, ' ')))
 		return (1);
-	if (!(glb->main_command = ft_strtrim(glb->command[0], "\n")))
+	if (glb->command && !glb->command[0])
+		glb->command[0] = ft_strdup("");
+	if (!(glb->main_command = ft_strdup(glb->command[0])))
 		return (1);
 	return (0);
 }
@@ -45,7 +49,7 @@ int	parse_command(t_global *glb)
 int	built_in_command(t_global *glb)
 {
 	if (ft_strcmp(glb->main_command, "echo") == 0)
-		return(ft_echo(glb->command)); // glb->command + 1 ?
+		return (ft_echo(glb->command)); // glb->command + 1 ?
 	else if (ft_strcmp(glb->main_command, "pwd") == 0)
 		return (ft_pwd(glb->cwd));
 	else

@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:13:38 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 09:04:44 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 12:21:44 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_global
 	char **command; //command et main command in same struct
 	char *main_command;
 	char *cwd;
-	pid_t pid;
 	int ret;
 	struct stat file;
 }				t_global;
@@ -40,7 +39,7 @@ int			return_message_int(char *str, int ret);
 int 		return_strerror(void);
 int			execute_command(t_global *glb);
 int			launch_shell(t_global *glb);
-int			excve_command(t_global *glb);
+int	execve_command(char *path_command, char **command, char **envp, int *ret);
 int			init_shell(t_global *glb);
 int			built_in_command(t_global *glb);
 int	real_excve_command(char *command, t_global *glb);

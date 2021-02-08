@@ -6,25 +6,44 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:02:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/05 10:35:57 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 12:31:20 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	start_shell(t_global *glb)
+char **create_command(char *command)
 {
-	// if (excve_command("/bin/date", glb) > 0)
-	// 	return (1); //exit ?
-	// printf("%s\n", strerror(errno));
+	char **tab_command;
+	if (!(tab_command = ft_split((const char *)command, ' ')))
+		return (NULL);
+	return(tab_command);
+}
+
+int	get_date(t_global *glb) //opti
+{
+	char **command;
+
+	if (!(command = create_command("/bin/date")))
+		return (1);
+	if (execve_command("/bin/date", command, glb->env, &glb->ret)) // Failed here
+	{
+		ft_free_tab(command);
+		return(return_message_int("Failed to init Minishell", glb->ret));
+	}
+	ft_free_tab(command);
+	//ret need to be 0
+	return(0);
 }
 
 int	init_shell(t_global *glb)
 {
+
 	if (!(glb->buf = ft_calloc(BUFFER_SIZE, sizeof(char))))
-		return_message_int("Failed to init buf", 1);
+		return(return_message_int("Failed to init buf", 1));
 	if (get_path(glb->env, &glb->path))
 		return (1);
-	// if (start_shell(glb);
+	if (get_date(glb)) //may cause problems
+		return (glb->ret);
 	return (0);
 }

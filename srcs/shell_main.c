@@ -6,28 +6,30 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/05 11:10:17 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 12:40:33 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	execve_command(t_global *glb, char *path_command)
+int	execve_command(char *path_command, char **command, char **envp, int *ret)
 {
-	if ((glb->pid = fork()) == -1)
+	pid_t pid;
+
+	if ((pid = fork()) == -1)
 		return(return_strerror());
-	if (glb->pid == 0)
+	if (pid == 0)
 	{
-		if ((glb->ret = execve(path_command, glb->command, glb->env)) == -1)
-			exit(glb->ret);
+		if ((*ret = execve(path_command, command, envp)) == -1)
+			exit(*ret);
 	}
 	else
 	{
-		waitpid(glb->pid, &glb->ret, 0);
-		glb->ret = WEXITSTATUS(glb->ret);
+		waitpid(pid, ret, 0);
+		*ret = WEXITSTATUS(*ret);
 	}
-	printf("??\n");
-	return (glb->ret);
+	
+	return (*ret);
 }
 
 int search_command_path(t_global *glb)
@@ -45,15 +47,18 @@ int search_command_path(t_global *glb)
 		if (stat(path_command, &glb->file) == 0)
 		{
 			command = 1;
-			execve_command(glb, path_command);	
+			execve_command(path_command, glb->command, glb->env, &glb->ret);	
 		}
 		free(path_command);
 		if (!(path_command = ft_strjoin(ft_strjoin(glb->path[x], "/"), glb->main_command)))
 			return (1);
 		x++;
 	}
-	//excve faut faire pour avoir le exit
-	printf("number: %d\n", command);
+	if (command == 0)
+	{
+		glb->ret = 127;
+		printf("error command\n");
+	}
 	free(path_command);
 	return (0);
 }
@@ -65,7 +70,7 @@ int	launch_shell(t_global *glb)
 		get_next_line(0, &glb->buf);
 		if (parse_command(glb))
 			return (1);
-		if (built_in_command(glb) != 0 && !(glb->buf[0] == '\n'))
+		if (built_in_command(glb) != 0 && !(glb->buf[0] == '\0'))
 		{
 			if (search_command_path(glb))
 				return (1);
