@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 16:14:38 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 14:47:55 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ int	launch_shell(t_global *glb)
 int main(int ac, char **av, char **envp)
 {
 	t_global *glb;
-
 	if (!(glb = ft_calloc(1, sizeof(t_global))))
 		return (1);
-	glb->env = envp;
+	glb->env = ft_strtabdup(envp);
+	if (get_env(&glb->env_list, glb->env))
+		return (1);
 	if (init_shell(glb))
 		return (free_shell(glb));
 	if (launch_shell(glb))

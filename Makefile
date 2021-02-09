@@ -32,7 +32,10 @@ SRCS_FILES =	shell_main.c	\
 				shell_echo.c	\
 				shell_pwd.c		\
 				shell_quit.c	\
-				shell_parse.c
+				shell_parse.c	\
+				shell_cd.c		\
+				shell_export.c 	\
+				shell_unset.c
 
 SRCS = $(SRCS_FILES)
 

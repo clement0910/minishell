@@ -6,11 +6,31 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:02:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 15:43:18 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/09 15:15:09 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	ft_lst_del_next(t_list *lst, t_list *next)
+{
+	if (!lst || !lst->content)
+		return ;
+	free(lst->content);
+
+}
+void	print_lst_tab(t_envlst **yolo)
+{
+	t_envlst *tmp;
+
+	tmp = *yolo;
+	while (tmp)
+	{
+		printf("[%s]=[%s]\n", ((t_env*)tmp->content)->key, ((t_env*)tmp->content)->value);
+		tmp = tmp->next;
+	}
+}
+
 
 char **create_command(char *command)
 {
@@ -45,7 +65,6 @@ int	init_shell(t_global *glb)
 		return (1);
 	if (get_home(glb->env, &glb->home))
 		return (1);
-	printf("home: %s\n", glb->home);
 	if (get_date(glb)) //may cause problems
 		return (glb->ret);
 	ft_printf("> ");
