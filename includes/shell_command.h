@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   shell_command.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/24 21:36:46 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/04 15:59:29 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/10 14:13:56 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/10 14:29:44 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef SHELL_COMMAND_H
+# define SHELL_COMMAND_H
 
-void example_function(void)
-{
-	return ;
-}
+char 		*search_command_path(char *command, char **path);
+int			execve_command(char *path_command, char **command, char **envp, int *ret);
+char 		**create_command(char *command);
 
-int main(int ac, char **av)
-{
-	char *buf;
-
-	(void)ac;
-	(void)av;
-	example_function();
-	buf = ft_calloc(BUFFER_SIZE, sizeof(char));
-	ft_printf("> ");
-	while (read(0, buf, BUFFER_SIZE) != 0)
-	{
-		printf("COMMAND: [%s]\n", buf);
-		ft_printf ("> ");
-	}
-	free(buf);
-	return (0);
-}
+#endif

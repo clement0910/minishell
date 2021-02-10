@@ -27,13 +27,28 @@ LIB_INCLUDES = $(LFT_INCLUDES_FLAG)
 
 #sources
 
-SRCS_FILES =	main.c	\
+SRCS_FILES =	shell_main.c		\
+				shell_init.c		\
+				shell_env.c			\
+				shell_command.c		\
+				shell_parse.c		\
+				shell_parse_env.c	\
+				shell_quit.c		\
+				shell_utils.c		\
+				built_in_echo.c 	\
+				built_in_export.c	\
+				built_in_pwd.c		\
+				built_in_unset.c	\
+				built_in_cd.c		
 
 SRCS = $(SRCS_FILES)
 
 #Headers
 
 INCLUDES =	shell.h			\
+			shell_builtin.h	\
+			shell_command.h	\
+			shell_env.h		\
 
 INCLUDES := $(addprefix $(INCLUDES_HDS), $(INCLUDES))
 
@@ -55,7 +70,7 @@ ERASE_FULLLINE := \e[2K
 #global variable
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 RM = /bin/rm -rf
 PRINT = printf
 
@@ -81,7 +96,7 @@ show_cursor:
 
 $(NAME):	$(OBJS) $(INCLUDES) $(LFT)
 	@$(PRINT) "$(ERASE_FULLLINE)\033[1;34m%-20s\033[1;33m%-25s\033[0;32m[OK]\033[0m\n$(SHOW_CURSOR)" "Compiled" "$(NAME)"
-	$(CC) $(CLFAGS) -o $(NAME) $(OBJS) $(MLX) $(LIB_FLAG)
+	$(CC) $(CLFAGS) -o $(NAME) $(OBJS) $(LIB_FLAG)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(INCLUDES) $(LFT)
 	@$(PRINT) "$(HIDE_CURSOR)\033[1;34m%-20s\033[1;33m%-25s\033[0;32m$(PROGRESS)\033[0m$(ERASE_ENDLINE)$(CURSOR_LEFT)" "Compilation..." "$(NAME)"
