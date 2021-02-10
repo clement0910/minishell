@@ -6,39 +6,11 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:02:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/09 15:15:09 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 12:39:42 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-void	ft_lst_del_next(t_list *lst, t_list *next)
-{
-	if (!lst || !lst->content)
-		return ;
-	free(lst->content);
-
-}
-void	print_lst_tab(t_envlst **yolo)
-{
-	t_envlst *tmp;
-
-	tmp = *yolo;
-	while (tmp)
-	{
-		printf("[%s]=[%s]\n", ((t_env*)tmp->content)->key, ((t_env*)tmp->content)->value);
-		tmp = tmp->next;
-	}
-}
-
-
-char **create_command(char *command)
-{
-	char **tab_command;
-	if (!(tab_command = ft_split((const char *)command, ' ')))
-		return (NULL);
-	return(tab_command);
-}
 
 int	get_date(t_global *glb) //opti
 {
@@ -58,15 +30,15 @@ int	get_date(t_global *glb) //opti
 
 int	init_shell(t_global *glb)
 {
-
 	if (!(glb->buf = ft_calloc(BUFFER_SIZE, sizeof(char))))
 		return(return_message_int("Failed to init buf", 1));
+	if (get_env(&glb->env_list, glb->env))
+		return (free_shell(glb));
 	if (get_path(glb->env, &glb->path))
 		return (1);
-	if (get_home(glb->env, &glb->home))
+	if (get_var_from_env(glb->env, &glb->home, "HOME="))
 		return (1);
 	if (get_date(glb)) //may cause problems
 		return (glb->ret);
-	ft_printf("> ");
 	return (0);
 }

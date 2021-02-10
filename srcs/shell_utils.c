@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_export.c                                     :+:      :+:    :+:   */
+/*   shell_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/09 10:31:44 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/09 15:41:55 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/10 12:14:34 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/10 14:12:57 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,47 +33,14 @@ char **ft_lst_to_tab(t_envlst **lst)
 	return (tab);
 }
 
-char **ft_strtabdup(char **src)
+void	print_envlst(t_envlst **yolo)
 {
-	int x;
-	int tablen;
-	char **ret;
+	t_envlst *tmp;
 
-	x = 0;
-	if ((tablen = ft_tablen(src)) == 0)
-		return (NULL);
-	if (!(ret = malloc((tablen + 1) * sizeof(char*))))
-		return (NULL);
-	while (x < tablen)
+	tmp = *yolo;
+	while (tmp)
 	{
-		if (!(ret[x] = ft_strdup(src[x])))
-		{
-			ret[x] = NULL;
-			ft_free_tab(ret);
-			free(ret);
-			return (NULL);
-		}
-		x++;
+		printf("[%s]=[%s]\n", ((t_env*)tmp->content)->key, ((t_env*)tmp->content)->value);
+		tmp = tmp->next;
 	}
-	ret[x] = NULL;
-	return (ret);
-}
-
-int ft_export(t_global *glb)
-{
-	t_envlst *lst;
-	t_env *env;
-
-	if (!(env = get_env_value(glb->command[1])))
-		return(1);
-	if (!(lst = ft_lst_new(env)))
-		return (1);
-	print_tab(glb->env);
-	ft_printf("-----------------\n");
-	ft_lst_addback(&glb->env_list, lst);
-	//print_lst_tab(&glb->env_list);
-	free(glb->env);
-	glb->env = ft_lst_to_tab(&glb->env_list);
-	print_tab(glb->env);
-	return (0);
 }

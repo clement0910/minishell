@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_pwd.c                                        :+:      :+:    :+:   */
+/*   shell_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/03 14:00:31 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/04 11:02:04 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/10 12:16:36 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/10 12:16:46 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	ft_pwd(char *cwd) //opti - protect
+char **create_command(char *command)
 {
-	if (!(cwd = malloc(BUFFER_SIZE * sizeof(char))))
-		return (1);
-	cwd = getcwd(cwd, BUFFER_SIZE);
-	ft_putendl_fd(cwd, 1);
-	return (0);
+	char **tab_command;
+	if (!(tab_command = ft_split((const char *)command, ' ')))
+		return (NULL);
+	return(tab_command);
 }

@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_quit.c                                       :+:      :+:    :+:   */
+/*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/03 14:19:22 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/10 14:25:22 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/09 10:31:44 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/10 14:36:05 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	free_shell(t_global *glb)
+int built_in_export(char **command, char ***env_tab, t_envlst **env_list)
 {
-	ft_free_tab(glb->command);
-	free(glb->home);
-	ft_free_tab(glb->path);
-	ft_lst_clear(&glb->env_list, free);
-	free(glb->buf);
-	ft_free_tab(glb->env);
-	if (glb)
-		free(glb);
-	return (glb->ret);
-}
+	t_envlst *lst;
+	t_env *env;
 
-int	return_message_int(char *str, int ret)
-{
-	ft_putendl_fd(str, 1);
-	return (ret);
-}
-
-int return_strerror(void)
-{
-	ft_putendl_fd(strerror(errno), 1);
-	return (1);
+	if (!(env = get_env_data(command[1])))
+		return(1);
+	if (!(lst = ft_lst_new(env)))
+		return (1);
+	ft_lst_addback(env_list, lst);
+	//print_lst_tab(&glb->env_list);
+	ft_free_tab(*env_tab);
+	*env_tab = ft_lst_to_tab(env_list);
+	return (0);
 }

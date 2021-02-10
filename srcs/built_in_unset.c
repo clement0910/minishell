@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_unset.c                                      :+:      :+:    :+:   */
+/*   built_in_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 14:59:25 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/09 17:13:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:01:13 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	ft_unset(t_global *glb, t_envlst **lst)
+int	built_in_unset(char **command, char ***env_tab, t_envlst **lst)
 {
 	int x;
 	int i;
@@ -24,7 +24,7 @@ int	ft_unset(t_global *glb, t_envlst **lst)
 	tmp = *lst;
 	x = ft_lst_size(tmp);
 	i = 0;
-	if (!(glb->command[1]))
+	if (!(command[1]))
 		return (1);
 	printf("LIST TAILLE: %d\n", x);
 	while (tmp)
@@ -37,7 +37,7 @@ int	ft_unset(t_global *glb, t_envlst **lst)
 			exit(1);		
 		}
 		
-		if (ft_strcmp(glb->command[1], ((t_env*)tmp->content)->key) == 0)
+		if (ft_strcmp(command[1], ((t_env*)tmp->content)->key) == 0)
 		{
 			printf("1\n");
 			tmpn = tmp->next;
@@ -58,9 +58,9 @@ int	ft_unset(t_global *glb, t_envlst **lst)
 		}
 		i++;
 	}
-	print_tab(glb->env);
-	free(glb->env);
-	glb->env = ft_lst_to_tab(&glb->env_list);
-	print_tab(glb->env);
+	print_tab(*env_tab);
+	ft_free_tab(*env_tab);
+	*env_tab = ft_lst_to_tab(lst);
+	print_tab(*env_tab);
 	return (0);
 }

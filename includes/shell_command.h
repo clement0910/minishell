@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_cd.c                                         :+:      :+:    :+:   */
+/*   shell_command.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/08 12:48:53 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/08 16:15:18 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/02/10 14:13:56 by csapt             #+#    #+#             */
+/*   Updated: 2021/02/10 14:29:44 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef SHELL_COMMAND_H
+# define SHELL_COMMAND_H
 
-int	built_in_cd(t_global *glb)
-{
-	if (!glb->command[1])
-	{
-		if (chdir(glb->home) == -1)
-			return(return_strerror());
-	}
-	else 
-	{
-		if (chdir(glb->command[1]) == -1)
-		{
-			return_strerror();
-			return(0);
-		}
-	}
-	return (0);
-}
+char 		*search_command_path(char *command, char **path);
+int			execve_command(char *path_command, char **command, char **envp, int *ret);
+char 		**create_command(char *command);
+
+#endif
