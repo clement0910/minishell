@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/10 18:27:32 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/11 15:44:18 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	launch_shell(t_global *glb)
 			if (launch_command(glb))
 				return (1);
 		}
-		ft_free_tab(glb->command);
+		free(glb->command);
+		//ft_free_tab(glb->command);
 		ft_printf("Minishell> ");
 	}
 }

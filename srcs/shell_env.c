@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:53:38 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/10 14:36:05 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/11 16:10:06 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env *get_env_data(char *envp)
 	if (!(env = malloc(sizeof(t_env))))
 		return (NULL);
 	//check env variables
-	if (!(env->key = ft_substr(envp, 0, ft_strlento(envp, '='))))
+	if (!(env->key = ft_strdupto(envp, '=')))
 	{
 		free(env);
 		return (NULL);
@@ -42,7 +42,7 @@ int	env_to_lst(t_envlst **env, char *envp)
 	{
 		if (!(env_data = get_env_data(envp)))
 			return (1);
-		if (!(*env = ft_lst_new(tmp)))
+		if (!(*env = ft_lst_new(env_data)))
 		{
 			free(tmp);
 			return (1);
@@ -52,7 +52,7 @@ int	env_to_lst(t_envlst **env, char *envp)
 	{
 		if (!(env_data = get_env_data(envp)))
 			return (1);
-		if (!(tmp = ft_lst_new(tmp)))
+		if (!(tmp = ft_lst_new(env_data)))
 		{
 			free(tmp);
 			return (1);
