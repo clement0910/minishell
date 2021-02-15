@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 10:08:42 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/11 15:44:18 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 16:32:26 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	launch_command(t_global *glb)
 
 	if ((path_command = search_command_path(glb->command[0], glb->path)))
 	{
-		execve_command(path_command, glb->command, glb->env, &glb->ret);
+		execve_command(path_command, glb->command, glb->env->env_tab, &glb->ret);
 		free(path_command);
 	}
 	else
@@ -101,7 +101,9 @@ int main(int ac, char **av, char **envp)
 	
 	if (!(glb = ft_calloc(1, sizeof(t_global))))
 		return (1);
-	if (!(glb->env = ft_strtabdup(envp)))
+	if (!(glb->env = ft_calloc(1, sizeof(t_env))))
+		return (free_shell(glb));
+	if (!(glb->env->env_tab = ft_strtabdup(envp)))
 		return (free_shell(glb));
 	if (init_shell(glb))
 		return (free_shell(glb));

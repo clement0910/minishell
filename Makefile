@@ -39,7 +39,8 @@ SRCS_FILES =	shell_main.c		\
 				built_in_export.c	\
 				built_in_pwd.c		\
 				built_in_unset.c	\
-				built_in_cd.c		
+				built_in_cd.c		\
+				built_in_env.c		\
 
 SRCS = $(SRCS_FILES)
 

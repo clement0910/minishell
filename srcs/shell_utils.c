@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:14:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/11 16:10:33 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 16:10:04 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char **ft_lst_to_tab(t_envlst **lst)
 		return (NULL);
 	while (tmp)
 	{
-		tab[x] = ft_strjoin(((t_env*)tmp->content)->key, ft_strjoin("=",((t_env*)tmp->content)->value));
+		tab[x] = ft_strjoin(((t_env_var*)tmp->content)->key, ft_strjoin("=",((t_env_var*)tmp->content)->value));
 		tmp = tmp->next;
 		x++;
 	}
@@ -42,7 +42,7 @@ void	print_lst_tab(t_envlst **yolo)
 	tmp = *yolo;
 	while (tmp)
 	{
-		printf("[%s]=[%s]\n", ((t_env*)tmp->content)->key, ((t_env*)tmp->content)->value);
+		printf("[%s]=[%s]\n", ((t_env_var*)tmp->content)->key, ((t_env_var*)tmp->content)->value);
 		tmp = tmp->next;
 	}
 }

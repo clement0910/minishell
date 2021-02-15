@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 14:01:37 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/10 14:37:20 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 16:19:27 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,22 @@
 
 typedef t_list t_envlst;
 
-typedef struct s_env
+typedef struct s_env_var
 {
 	char *key;
 	char *value;
+	bool local;
+}				t_env_var;
+
+typedef struct s_env
+{
+	char **env_tab;
+	t_envlst *env_lst;
 }				t_env;
 
 int			get_path(char **env, char ***path);
 
-t_env 		*get_env_data(char *envp);
+t_env_var 	*get_env_data(char *envp);
 int			env_to_lst(t_envlst **env, char *envp);
 int			get_env(t_envlst **env, char **envp);
 

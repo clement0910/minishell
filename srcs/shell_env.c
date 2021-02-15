@@ -6,36 +6,43 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:53:38 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/11 16:10:06 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 16:35:31 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_env *get_env_data(char *envp)
+t_env_var *get_env_data(char *envp)
 {
-	t_env *env;
+	t_env_var *env_var;
 
-	if (!(env = malloc(sizeof(t_env))))
+	if (!(env_var = malloc(sizeof(t_env_var))))
 		return (NULL);
-	//check env variables
-	if (!(env->key = ft_strdupto(envp, '=')))
+	env_var->local = false;
+	if (ft_chrcmp(envp, '='))
 	{
-		free(env);
+		if (!(env_var->key = ft_strdup(envp)))
+			return (NULL);
+		env_var->value = NULL;
+		return (env_var);
+	}
+	if (!(env_var->key = ft_strdupto(envp, '=')))
+	{
+		free(env_var);
 		return (NULL);
 	}
-	if (!(env->value = ft_strdup(ft_strchr(envp, '=') + 1)))
+	if (!(env_var->value = ft_strdup(ft_strchr(envp, '=') + 1)))
 	{
-		free(env->key);
-		free(env);
+		free(env_var->key);
+		free(env_var);
 		return (NULL);
 	}
-	return (env);
+	return (env_var);
 }
 
 int	env_to_lst(t_envlst **env, char *envp)
 {
-	t_env *env_data;
+	t_env_var *env_data;
 	t_envlst *tmp;
 
 	if (*env == NULL)

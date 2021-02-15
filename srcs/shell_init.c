@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:02:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/11 15:51:31 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/15 16:03:07 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_date(t_global *glb) //opti
 
 	if (!(command = create_command("/bin/date")))
 		return (1);
-	if (execve_command("/bin/date", command, glb->env, &glb->ret)) // Failed here
+	if (execve_command("/bin/date", command, glb->env->env_tab, &glb->ret)) // if Failed here
 	{
 		ft_free_tab(command);
 		return(return_message_int("Failed to init Minishell", glb->ret));
@@ -32,12 +32,11 @@ int	init_shell(t_global *glb)
 {
 	if (!(glb->buf = ft_calloc(BUFFER_SIZE, sizeof(char))))
 		return(return_message_int("Failed to init buf", 1));
-	if (get_env(&glb->env_list, glb->env))
+	if (get_env(&glb->env->env_lst, glb->env->env_tab))
 		return (free_shell(glb));
-	//print_lst_tab(&glb->env_list);
-	if (get_path(glb->env, &glb->path))
+	if (get_path(glb->env->env_tab, &glb->path))
 		return (1);
-	if (get_var_from_env(glb->env, &glb->home, "HOME="))
+	if (get_var_from_env(glb->env->env_tab, &glb->home, "HOME="))
 		return (1);
 	if (get_date(glb)) //may cause problems
 		return (glb->ret);
