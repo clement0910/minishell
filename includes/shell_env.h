@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 14:01:37 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/15 16:19:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:52:18 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_env
 {
 	char **env_tab;
 	t_envlst *env_lst;
+	//t_envlst *env_lst_ascii; more opti ?
 }				t_env;
 
 int			get_path(char **env, char ***path);
