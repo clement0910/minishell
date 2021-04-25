@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_command.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/10 14:13:56 by csapt             #+#    #+#             */
-/*   Updated: 2021/02/10 14:29:44 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
+/*   Updated: 2021/04/25 19:33:47 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_COMMAND_H
-# define SHELL_COMMAND_H
+#include "libft.h"
 
-char 		*search_command_path(char *command, char **path);
-int			execve_command(char *path_command, char **command, char **envp, int *ret);
-char 		**create_command(char *command);
-
-#endif
+int main()
+{
+	printf("Hello World!\n");
+	return (0);
+}
