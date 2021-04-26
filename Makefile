@@ -27,13 +27,21 @@ LIB_INCLUDES = $(LFT_INCLUDES_FLAG)
 
 #sources
 
-SRCS_FILES = main.c
+SRCS_FILES =	shell_main.c	\
+				shell_quit.c	\
+				shell_env.c		\
+				shell_parse.c	\
+				shell_built_in.c \
+				shell_init.c
 
 SRCS = $(SRCS_FILES)
 
 #Headers
 
-INCLUDES =	shell.h
+INCLUDES =	shell.h	\
+			shell_env.h	\
+			shell_parse.h	\
+			shell_builtin.h	\
 
 INCLUDES := $(addprefix $(INCLUDES_HDS), $(INCLUDES))
 
