@@ -32,7 +32,9 @@ SRCS_FILES =	shell_main.c	\
 				shell_env.c		\
 				shell_parse.c	\
 				shell_built_in.c \
-				shell_init.c
+				shell_init.c	\
+				built_in_export.c	\
+				built_in_env.c
 
 SRCS = $(SRCS_FILES)
 
@@ -62,8 +64,8 @@ ERASE_FULLLINE := \e[2K
 
 #global variable
 
-CC = gcc
-CFLAGS = 
+CC = clang
+CFLAGS =
 RM = /bin/rm -rf
 PRINT = printf
 

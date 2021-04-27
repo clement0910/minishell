@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/26 17:06:36 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 16:49:41 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int launch_shell(t_global *glb)
 			return (ret_errno_msg("get_next_line error", 0));
 		if (parse_command(&buf, glb->command) == 0)
 			return (ret_msg("parsing error", 0)); //TODO: check error msg
-		built_in_command(glb->command);
+		built_in_command(glb);
 		if (ft_strcmp(glb->command->tab_command[0], "exit") == 0)
 			return (0);
 		ft_free_tab(glb->command->tab_command);
