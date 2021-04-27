@@ -6,11 +6,35 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:10:30 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/27 17:47:49 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 18:04:17 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+char **env_to_tab(t_env *env)
+{
+	//TODO: check le cas ou exported est a 0 et proteger argv_join
+	int x;
+	int len;
+	char **tab;
+	t_env *tmp;
+
+	x = 0;
+	tmp = env;
+	len = ft_lst_size(env);
+	tab = malloc((len + 1) * sizeof(char*));
+	if (!tab)
+		return (NULL);
+	while (tmp)
+	{
+		tab[x] = argv_join("%s=%s", ((t_env_var*)tmp->content)->key, ((t_env_var*)tmp->content)->value);
+		tmp = tmp->next;
+		x++;
+	}
+	tab[x] = NULL;
+	return (tab);
+}
 
 t_env *env_to_null_lst(char *envp)
 {
