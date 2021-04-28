@@ -6,11 +6,25 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:32:26 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/28 14:20:48 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/28 17:38:32 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+char *get_var_name(t_env *env, char *var_name)
+{
+	t_env *tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strcmp(var_name, ((t_env_var*)tmp->content)->key) == 0)
+			return (((t_env_var*)tmp->content)->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 int addback_env(t_env_var *env_var, t_env **env)
 {
