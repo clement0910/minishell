@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:21:13 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/26 17:41:38 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/28 15:09:11 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int built_in_command(t_global *glb)
 		return (built_in_env(glb->tab_env));
 	else if (ft_strcmp("export", glb->command->tab_command[0]) == 0)
 		return (built_in_export(glb->command, &glb->env, &glb->tab_env));
+	else if (ft_strcmp("unset", glb->command->tab_command[0]) == 0)
+		return (built_in_unset(glb->command, &glb->tab_env, &glb->env));
 	else
 		return (0);
 }
