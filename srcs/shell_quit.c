@@ -6,14 +6,24 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 14:35:40 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/26 17:09:00 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 21:28:11 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+void 	free_env(void *content)
+{
+	if (!content)
+		return ;
+	free(((t_env_var*)content)->key);
+	free(((t_env_var*)content)->value);
+	free(content);
+}
+
 int 	free_shell(t_global *glb)
 {
+	ft_lst_clear(&glb->env, free_env);
 	ft_free_tab(glb->tab_env);
 	if (glb->command)
 		ft_free_tab(glb->command->tab_command);

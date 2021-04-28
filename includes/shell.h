@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/27 17:37:51 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/28 14:27:50 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int init_var(t_global *glb, char **envp);
 int 	ret_errno_msg(char *msg, int ret);
 int 	free_shell(t_global *glb);
 int 	ret_msg(char *msg, int ret);
-
+void 	free_env(void *content);
 # include "shell_builtin.h"
 
 #endif
