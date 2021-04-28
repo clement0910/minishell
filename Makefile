@@ -27,13 +27,27 @@ LIB_INCLUDES = $(LFT_INCLUDES_FLAG)
 
 #sources
 
-SRCS_FILES = main.c
+SRCS_FILES =	shell_main.c	\
+				shell_quit.c	\
+				shell_env.c		\
+				shell_env_utils.c \
+				shell_local_env.c \
+				shell_parse.c	\
+				shell_built_in.c \
+				shell_init.c	\
+				shell_utils.c	\
+				built_in_export.c	\
+				built_in_env.c	\
+				built_in_unset.c
 
 SRCS = $(SRCS_FILES)
 
 #Headers
 
-INCLUDES =	shell.h
+INCLUDES =	shell.h	\
+			shell_env.h	\
+			shell_parse.h	\
+			shell_builtin.h	\
 
 INCLUDES := $(addprefix $(INCLUDES_HDS), $(INCLUDES))
 
@@ -54,8 +68,8 @@ ERASE_FULLLINE := \e[2K
 
 #global variable
 
-CC = gcc
-CFLAGS = 
+CC = clang
+CFLAGS =
 RM = /bin/rm -rf
 PRINT = printf
 
