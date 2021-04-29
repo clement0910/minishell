@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_parse.h                                      :+:      :+:    :+:   */
+/*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 16:04:11 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 13:57:09 by rolaforg         ###   ########lyon.fr   */
+/*   Created: 2021/02/08 12:48:53 by rolaforg          #+#    #+#             */
+/*   Updated: 2021/04/29 14:55:48 by rolaforg         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_PARSE_H
-# define SHELL_PARSE_H
+#include "shell.h"
 
-typedef struct s_parse
+int	built_in_cd(char *path, char *home)
 {
-	//Libre à toi de faire ce que tu veux avec la structure
-	char **cmds;
-}				t_parse;
-
-#endif
+	if (!path)
+	{
+		if (!home)
+		{
+			printf("Home is NULL");
+		}
+		if (chdir(home) == -1)
+			return(1);
+	}
+	else 
+	{
+		if (chdir(path) == -1)
+		{
+			return(1);
+		}
+	}
+	return (0);
+}

@@ -28,6 +28,12 @@ LIB_INCLUDES = $(LFT_INCLUDES_FLAG)
 #sources
 
 SRCS_FILES =	shell_main.c	\
+				shell_location.c \
+				built_in_echo.c \
+				built_in_cd.c \
+				built_in_pwd.c \
+				shell_welcome.c \
+				shell_cursor.c \
 				shell_quit.c	\
 				shell_env.c		\
 				shell_env_utils.c \
