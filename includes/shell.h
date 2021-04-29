@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:16:19 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 16:08:58 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int init_var(t_global *glb, char **envp);
 
 //Utilities
 char *current_path(void);
+char 	*get_latest_folder(char **folders);
 char	*current_folder(void);
 void	print_cursor(int ret);
 void print_welcome(void);

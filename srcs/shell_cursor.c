@@ -6,13 +6,13 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:54:34 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/04/28 18:53:54 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 16:08:58 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	print_cursor(int ret)
+void	print_cursor(int ret) //modifier name
 {
 	char	*folder;
 

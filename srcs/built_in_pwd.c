@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:48:53 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/04/29 15:01:30 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 18:36:42 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,9 @@
 int	built_in_pwd(void)
 {
 	char *path = current_path();
-	if (path)
-	{
-		ft_putstr_fd(path, 1);
-		ft_putchar_fd('\n', 1);
-		free(path);
-		return (0);
-	}
-	return (1);
+	if (!path)
+		return (1);
+	ft_putendl_fd(path, 1);
+	free(path);
+	return (0);
 }
