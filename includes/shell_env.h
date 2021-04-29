@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:41:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/28 14:28:38 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 15:29:11 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,21 @@ t_env *env_to_null_lst(char *envp);
 t_env *get_env(char **envp);
 
 //UTILS
-int addback_env(t_env_var *env_var, t_env **env);
+char *get_var_name(t_env *env, char *var_name);
 int exported_env_len(t_env *env);
-int check_exist_var(char *var_name, t_env *env);
+int check_exist_var(char *var_name, t_env *env, int exported);
 char**	env_to_tab(t_env *env);
 
 //EXPORT ENV
 int export_var(char *var, t_env **env, char ***env_tab);
-int replace_env_value(char *str_env, t_env *env, char ***env_tab);
-int export_env(char *str_env, t_env **env, char ***env_tab);
+int replace_env_value(char *str_env, t_env *env, char ***env_tab, int exported);
+int export_env(char *str_env, t_env **env, char ***env_tab, int exported);
 int display_export(t_env *env);
+
+//ADDBACK ENV
+int addback_env(t_env_var *env_var, t_env **env);
+int addback_env_value(char *str_env, t_env **env, char ***env_tab, int exported);
+int addback_value(char *str_env, t_env *env, char ***env_tab, int exported);
+int check_addback(const char *str_env);
 
 #endif

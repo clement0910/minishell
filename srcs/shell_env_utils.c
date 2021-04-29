@@ -6,24 +6,24 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:32:26 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/28 14:20:48 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 15:20:12 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int addback_env(t_env_var *env_var, t_env **env)
+char *get_var_name(t_env *env, char *var_name)
 {
-	t_env *lst;
+	t_env *tmp;
 
-	lst = ft_lst_new(env_var);
-	if (!lst)
+	tmp = env;
+	while (tmp)
 	{
-		free(env_var);
-		return (0);
+		if (ft_strcmp(var_name, ((t_env_var*)tmp->content)->key) == 0)
+			return (((t_env_var*)tmp->content)->value);
+		tmp = tmp->next;
 	}
-	ft_lst_addback(env, lst);
-	return (1);
+	return (NULL);
 }
 
 int exported_env_len(t_env *env)
@@ -42,7 +42,7 @@ int exported_env_len(t_env *env)
 	return (x);
 }
 
-int check_exist_var(char *str_env, t_env *env)
+int check_exist_var(char *str_env, t_env *env, int exported)
 {
 	t_env *tmp;
 
@@ -51,7 +51,8 @@ int check_exist_var(char *str_env, t_env *env)
 	{
 		if (ft_strncmp(str_env, ((t_env_var*)tmp->content)->key, ft_strlento(((t_env_var*)tmp->content)->key, '=')) == 0) //TODO: pas sur de ca recheck
 		{
-			((t_env_var*)tmp->content)->exported = 1;
+			if (exported)
+				((t_env_var*)tmp->content)->exported = 1;
 			return (1);
 		}
 		tmp = tmp->next;
