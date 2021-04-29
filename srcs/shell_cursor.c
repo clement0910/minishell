@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_parse.h                                      :+:      :+:    :+:   */
+/*   shell_cursor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 16:04:11 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 13:57:09 by rolaforg         ###   ########lyon.fr   */
+/*   Created: 2021/02/17 17:54:34 by rolaforg          #+#    #+#             */
+/*   Updated: 2021/04/28 18:53:54 by rolaforg         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_PARSE_H
-# define SHELL_PARSE_H
+#include "shell.h"
 
-typedef struct s_parse
+void	print_cursor(int ret)
 {
-	//Libre à toi de faire ce que tu veux avec la structure
-	char **cmds;
-}				t_parse;
+	char	*folder;
 
-#endif
+	folder = current_folder();
+	if (ret)
+	{
+		ft_putstr_fd(folder, 1);
+		ft_putstr_fd(" \e[31m>\e[39m ", 1);
+	}
+	else
+	{
+		ft_putstr_fd(folder, 1);
+		ft_putstr_fd(" \e[32m>\e[39m ", 1);
+	}
+	free(folder);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:58:30 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/27 17:04:24 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/28 18:41:23 by rolaforg         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int init_var(t_global *glb, char **envp)
 {
-	glb->command = ft_calloc(1, sizeof(t_parse));
-	if (!glb->command)
+	glb->p = ft_calloc(1, sizeof(t_parse));
+	if (!glb->p)
 		return (ret_errno_msg(NULL, 0));
 	glb->tab_env = ft_strtabdup(envp);
 	if (!glb->tab_env)

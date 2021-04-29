@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:42:35 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/28 14:13:10 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/28 19:15:27 by rolaforg         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ int display_export(t_env *env)
 	return (1);
 }
 
-int	built_in_export(t_parse *command, t_env **env, char ***env_tab)
-{
-	if (!command->tab_command[1])
-		return (display_export(*env));
-	if (ft_chrcmp(command->tab_command[1], '='))
-		return (export_var(command->tab_command[1], env, env_tab));
-	else if (check_exist_var(command->tab_command[1], *env))
-		return (replace_env_value(command->tab_command[1], *env, env_tab));
-	else
-		return (export_env(command->tab_command[1], env, env_tab));
-}
+// int	built_in_export(char *key, char *value)
+// {
+// 	if (!command->tab_command[1])
+// 		return (display_export(*env));
+// 	if (ft_chrcmp(command->tab_command[1], '='))
+// 		return (export_var(command->tab_command[1], env, env_tab));
+// 	else if (check_exist_var(command->tab_command[1], *env))
+// 		return (replace_env_value(command->tab_command[1], *env, env_tab));
+// 	else
+// 		return (export_env(command->tab_command[1], env, env_tab));
+// }

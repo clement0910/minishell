@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_parse.h                                      :+:      :+:    :+:   */
+/*   built_in_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 16:04:11 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 13:57:09 by rolaforg         ###   ########lyon.fr   */
+/*   Created: 2021/02/08 12:48:53 by rolaforg          #+#    #+#             */
+/*   Updated: 2021/04/29 15:01:30 by rolaforg         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_PARSE_H
-# define SHELL_PARSE_H
+#include "shell.h"
 
-typedef struct s_parse
+int	built_in_pwd(void)
 {
-	//Libre à toi de faire ce que tu veux avec la structure
-	char **cmds;
-}				t_parse;
-
-#endif
+	char *path = current_path();
+	if (path)
+	{
+		ft_putstr_fd(path, 1);
+		ft_putchar_fd('\n', 1);
+		free(path);
+		return (0);
+	}
+	return (1);
+}
