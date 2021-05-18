@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 16:08:58 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/05/18 14:06:04 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "shell_parse.h"
 # include <string.h>
 # include <sys/errno.h>
+#include <sys/stat.h>
 
 typedef struct s_global
 {
@@ -46,6 +47,15 @@ int 	ret_errno_msg(char *msg, int ret);
 int 	free_shell(t_global *glb);
 int 	ret_msg(char *msg, int ret);
 void 	free_env(void *content);
+void 	unknow_command_msg(char *command);
+
+//SHELL COMMAND
+int	execve_command(char *path_command, char **command, char **envp, int *ret);
+char **get_path(char *path);
+int check_another_path(char *path, char **path_command, char *command);
+char *search_path_command(t_env *env, char *command, char **path);
+int launch_command(t_global *glb);
+
 # include "shell_builtin.h"
 
 #endif
