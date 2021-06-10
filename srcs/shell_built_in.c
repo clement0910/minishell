@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:21:13 by csapt             #+#    #+#             */
-/*   Updated: 2021/05/18 14:37:42 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/05/18 15:50:48 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ int built_in_command(char *cmd, char **args, t_global *glb)
 		return (built_in_env(glb->tab_env));
 	else if (ft_strcmp("unset", cmd) == 0)
 		return (built_in_unset(args[1], &glb->tab_env, &glb->env));
+	else if (ft_strcmp("export", cmd) == 0)
+		return (built_in_export(1, args[1], &glb->env, &glb->tab_env));
+	else if (ft_chrcmp(cmd, '=') == 0)
+		return (built_in_export(0, cmd, &glb->env, &glb->tab_env));
 	else
 	{
 		glb->ret = 1;
-		return (1);
+		return (0);
 	}
 }

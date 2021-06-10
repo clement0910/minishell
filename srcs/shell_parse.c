@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/05/18 14:26:26 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/10 18:02:54 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	parse_command(t_global *glb, char *buf)
 		return (1);
 	}
 
+	glb->p->cmds = ft_split(buf, ' ');
 	cmds = ft_split(buf, ';');
 	//cmds = replace_vars(cmds, glb->env);
 	if (*cmds)
@@ -81,7 +82,8 @@ int	parse_command(t_global *glb, char *buf)
 			{
 				args = ft_split(*cmdsBis++, ' '); // TODO Create a modified version of ft_split for preventing split of ; inside quotes (for echo)
 				cmd = args[0];
-				built_in_command(cmd, args, glb);
+				if (built_in_command(cmd, args, glb) == 0)
+					launch_command(glb);
 				// printf("Command: \'%s\'\n", cmd);
 				// if (args[1])
 				// {
@@ -89,7 +91,6 @@ int	parse_command(t_global *glb, char *buf)
 				// 	for (int i = 1; args[i]; i++)
 				// 		printf("  %i: %s \n", i, args[i]);
 				// }
-				printf("test\n");
 			}
 			// ft_free_tab(args);
 		}

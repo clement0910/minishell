@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:04:11 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 13:57:09 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/04/29 16:08:58 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 typedef struct s_parse
 {
-	//Libre à toi de faire ce que tu veux avec la structure
 	char **cmds;
 }				t_parse;
 
