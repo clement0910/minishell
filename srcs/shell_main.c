@@ -16,11 +16,12 @@ int launch_shell(t_global *glb)
 {
 	char *buff;
 
+	buff = NULL;
 	while (1)
 	{
 		if (get_next_line(0, &buff) == -1)
 			return (ret_errno_msg("get_next_line error", 0));
-		if (parse_command(glb, buff))
+		if (buff && buff[0] && parse_command(glb, buff))
 			return (ret_msg("Parsing error.", 0)); //TODO: check error msg
 		// built_in_command(glb);
 		// if (ft_strcmp(glb->command->tab_command[0], "exit") == 0)

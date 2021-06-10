@@ -23,5 +23,6 @@ int built_in_unset(const char *var_name, char ***env_tab, t_env **env);
 int	built_in_echo(char **args);
 int	built_in_cd(char *path, char *home);
 int	built_in_pwd(void);
+int built_in_ls(void);
 
 #endif
