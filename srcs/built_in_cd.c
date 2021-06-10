@@ -27,6 +27,7 @@ int	built_in_cd(char *path, char *home)
 	{
 		if (chdir(path) == -1)
 		{
+            ft_putendl_fd(argv_join("No such path or directory. (%s)", path), 1);
 			return(1);
 		}
 	}

@@ -21,29 +21,23 @@ int built_in_hello(void)
 
 int built_in_command(char *cmd, char **args, t_global *glb)
 {
-	glb->ret = 0;
-	if (ft_strcmp("echo", cmd) == 0)
-		return (built_in_echo(args));
+    if (!cmd)
+        glb->ret = 1;
+    if (ft_strcmp("ls", cmd) == 0)
+        glb->ret = built_in_ls();
+	else if (ft_strcmp("echo", cmd) == 0)
+		glb->ret = built_in_echo(args);
 	else if (ft_strcmp("cd", cmd) == 0)
-		return (built_in_cd(args[1], getenv("HOME")));
+		glb->ret = built_in_cd(args[0], getenv("HOME"));
 	else if (ft_strcmp("hello", cmd) == 0)
-		return (built_in_hello());
+		glb->ret = built_in_hello();
 	else if (ft_strcmp("pwd", cmd) == 0)
-		return (built_in_pwd());
+		glb->ret = built_in_pwd();
+    else if (ft_strcmp("exit", cmd) == 0) {
+        free_shell(glb);
+        exit(EXIT_SUCCESS);
+    }
 	else
-	{
 		glb->ret = 1;
-		return (1);
-	}
+    return (glb->ret);
 }
-
-	// if (ft_strcmp("hello", glb->command->tab_command[0]) == 0)
-	// 	return (built_in_hello());
-	// else if (ft_strcmp("env", glb->command->tab_command[0]) == 0)
-	// 	return (built_in_env(glb->tab_env));
-	// else if (ft_strcmp("export", glb->command->tab_command[0]) == 0)
-	// 	return (built_in_export(glb->command, &glb->env, &glb->tab_env));
-	// else if (ft_strcmp("unset", glb->command->tab_command[0]) == 0)
-	// 	return (built_in_unset(glb->command, &glb->tab_env, &glb->env));
-	// else
-	// 	return (0);

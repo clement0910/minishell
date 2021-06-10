@@ -28,8 +28,9 @@ unsigned int begin_with(char *str, char *prefix) // TODO Move in another file
         unsigned int    size;
 
         i = 0;
-        if (!(size = ft_strlen(prefix)) || !(ft_strlen(str)))
+        if (!str || !prefix)
                 return (0);
+        size = ft_strlen(prefix);
         while (str[i] && prefix[i])
         {
                 if (str[i] == prefix[i])
@@ -56,29 +57,28 @@ int	built_in_echo(char **args)
 	int	skip;
 
 	x = 0;
-	
-	if (args[1])
-		jump = begin_with(args[1], "-n");
+	if (!args || !args[0])
+	    return (0);
+	if (args[0])
+		jump = begin_with(args[0], "-n");
 	else
 		jump = 0;
 
-	//command = replace_vars(command, env);
-	while (args[++x])
+	while (args[x])
 	{
+        //ft_putendl_fd(args[x], 1);
 		i = 0;
 		skip = quote_mode(args[x]);
-		if ((x > 1 && !jump) || (jump && x > 2))
+		if ((x > 0 && !jump) || (jump && x > 1))
 			write(1, " ", 1);
-		while (args[x][i] && (!jump || (jump && x != 1)))
+		while (args[x][i] && (!jump || (jump && x > 0)))
 		{
-			if (!skip || (args[x][i] != skip || args[x][i - 1] == '\\') && (args[x][i] != '\\' || args[x][i - 1] == '\\'))
-			{
+			if (!skip || (args[x][i] != skip && args[x][i - 1] != '\\') ||
+			(args[x][i] == '\\' && args[x][i - 1] == '\\'))
 				write(1, &args[x][i], 1);
-				if (args[x][i - 1] == '\\')
-					i++;
-			}
 			i++;
-		}			
+		}
+		x++;
 	}
 	if (!jump)
 		write(1, "\n", 1);
