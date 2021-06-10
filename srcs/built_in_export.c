@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:42:35 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:14:05 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/10 17:17:36 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,14 @@ int export_env(char *str_env, t_env **env, char ***env_tab, int exported)
 
 int display_export(t_env *env)
 {
-	t_env *tmp;
+	char **tab;
 
-	tmp = env;
-	while (tmp)
-	{
-		if (((t_env_var*)tmp->content)->value)
-			printf("declare -x %s=\"%s\"\n", ((t_env_var*)tmp->content)->key, ((t_env_var*)tmp->content)->value);
-		else
-			printf("declare -x %s\n", ((t_env_var*)tmp->content)->key);
-		tmp = tmp->next;
-	}
+	tab = create_export_tab(env);
+	if (!tab)
+		return (0);
+	sort_ascii_tab(tab);
+	print_tab(tab);
+	ft_free_tab(tab);
 	return (1);
 }
 

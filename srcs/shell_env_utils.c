@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:32:26 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:20:12 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/10 16:08:27 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char **env_to_tab(t_env *env)
 		return (NULL);
 	while (tmp)
 	{
-		if (((t_env_var*)tmp->content)->exported == 1 && ((t_env_var*)tmp->content)->value)
+		if (((t_env_var*)tmp->content)->exported == 1 && ((t_env_var*)tmp->content)->value) //leaks car exported_env_len peut etre trop long
 		{
 			tab[x] = argv_join("%s=%s", ((t_env_var*)tmp->content)->key, ((t_env_var*)tmp->content)->value);
 			if (!tab[x])

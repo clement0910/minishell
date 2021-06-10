@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:16:37 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/05/18 14:45:47 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int launch_shell(t_global *glb)
 			return (ret_errno_msg("get_next_line error", 0));
 		if (buff && buff[0] && parse_command(glb, buff))
 			return (ret_msg("Parsing error.", 0)); //TODO: check error msg
-		// built_in_command(glb);
 		// if (ft_strcmp(glb->command->tab_command[0], "exit") == 0)
 		// 	return (0);
 		// ft_free_tab(glb->command->tab_command);

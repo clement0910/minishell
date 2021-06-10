@@ -44,9 +44,10 @@ SRCS_FILES =	shell_main.c	\
 				shell_utils.c	\
 				built_in_export.c	\
 				built_in_env.c	\
-				built_in_unset.c \
-                shell_command.c \
+				built_in_unset.c	\
+				shell_command.c \
                 built_in_ls.c \
+                shell_sort_export.c 
 
 SRCS = $(SRCS_FILES)
 
