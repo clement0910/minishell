@@ -30,7 +30,7 @@ t_env *env_to_null_lst(char *envp);
 t_env *get_env(char **envp);
 
 //UTILS
-char *get_var_name(t_env *env, char *var_name);
+char *get_var_value(t_env *env, char *var_name);
 int exported_env_len(t_env *env);
 int check_exist_var(char *var_name, t_env *env, int exported);
 char**	env_to_tab(t_env *env);

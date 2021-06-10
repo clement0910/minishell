@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-char *get_var_name(t_env *env, char *var_name)
+char *get_var_value(t_env *env, char *var_name)
 {
 	t_env *tmp;
 
