@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_built_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:21:13 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 11:07:33 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 12:19:41 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int built_in_command(char *cmd, char **args, t_global *glb)
     else if (ft_strcmp("exit", cmd) == 0) {
         free_shell(glb);
         exit(EXIT_SUCCESS);
+	}
 	else
 		glb->ret = 1;
     return (glb->ret);
