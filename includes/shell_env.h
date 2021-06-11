@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:41:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:29:11 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/10 18:52:32 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int display_export(t_env *env);
 //ADDBACK ENV
 int addback_env(t_env_var *env_var, t_env **env);
 int addback_env_value(char *str_env, t_env **env, char ***env_tab, int exported);
-int addback_value(char *str_env, t_env *env, char ***env_tab, int exported);
+int addback_value(char *str_env, t_env *env, char ***env_tab);
 int check_addback(const char *str_env);
 
 #endif

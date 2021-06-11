@@ -6,13 +6,13 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 15:53:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/29 15:20:12 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 11:28:49 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int addback_value(char *str_env, t_env *env, char ***env_tab, int exported)
+int addback_value(char *str_env, t_env *env, char ***env_tab)
 {
 	t_env *tmp;
 
@@ -26,15 +26,16 @@ int addback_value(char *str_env, t_env *env, char ***env_tab, int exported)
 													  ft_strchr(str_env, '=') + 1);
 			if (((t_env_var*)tmp->content)->value == NULL)
 				return (0);
+			if (((t_env_var*)tmp->content)->exported)
+			{
+				ft_free_tab(*env_tab);
+				*env_tab = env_to_tab(env);
+				if (!*env_tab)
+					return (0);
+			}
+			break;
 		}
 		tmp = tmp->next;
-	}
-	if (exported)
-	{
-		ft_free_tab(*env_tab);
-		*env_tab = env_to_tab(env);
-		if (!*env_tab)
-			return (0);
 	}
 	return (1);
 }
@@ -43,9 +44,9 @@ int addback_env_value(char *str_env, t_env **env, char ***env_tab, int exported)
 {
 	char *tmp;
 
-	if (check_exist_var(str_env, *env, exported) == 0)
+	if (check_exist_var(str_env, *env, exported) == 1)
 	{
-		if (addback_value(str_env, *env, env_tab, exported) == 0)
+		if (addback_value(str_env, *env, env_tab) == 0)
 			return (0);
 		else
 			return (1);

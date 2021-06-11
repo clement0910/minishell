@@ -6,11 +6,37 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:58:30 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/28 18:41:23 by rolaforg         ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 10:42:07 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+int increment_shlvl(char **tab_env)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (tab_env[i] != NULL)
+	{
+		if (ft_strncmp(tab_env[i], "SHLVL=", 6) == 0)
+		{
+			tmp = ft_itoa(1 + ft_atoi(tab_env[i] + 6));
+			free(tab_env[i]);
+			if (!tmp)
+				return (1);
+			tab_env[i] = argv_join("SHLVL=%s", tmp);
+			if (!tab_env[i])
+			{
+				free(tmp);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
 
 int init_var(t_global *glb, char **envp)
 {
@@ -20,7 +46,9 @@ int init_var(t_global *glb, char **envp)
 	glb->tab_env = ft_strtabdup(envp);
 	if (!glb->tab_env)
 		return (ret_errno_msg(NULL, 0));
-	glb->env = get_env(envp);
+	if (increment_shlvl(glb->tab_env))
+		return (ret_msg("Failed to get env", 0));
+	glb->env = get_env(glb->tab_env);
 	if (!glb->env)
 		return (ret_msg("Failed to get env", 0));
 	return (1);

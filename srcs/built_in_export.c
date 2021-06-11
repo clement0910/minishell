@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:42:35 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/10 17:17:36 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 11:33:43 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int replace_env_value(char *str_env, t_env *env, char ***env_tab, int exported)
 	tmp = env;
 	while (tmp)
 	{
-		if (ft_strncmp(str_env, ((t_env_var*)tmp->content)->key, ft_strlento(((t_env_var*)tmp->content)->key, '=')) == 0) //TODO: pas sur de ca recheck
+		if (ft_strncmp(str_env, ((t_env_var*)tmp->content)->key,
+					   ft_strlento(((t_env_var*)tmp->content)->key, '=')) == 0) //TODO: pas sur de ca recheck
 		{
 			free(((t_env_var*)tmp->content)->value);
 			((t_env_var*)tmp->content)->value = ft_strdup(ft_strchr(str_env, '=') + 1);
