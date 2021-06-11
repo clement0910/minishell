@@ -18,7 +18,7 @@ int check_var_name(char *str_env)
 
 	i = 0;
 	if (!str_env)
-		return (1);
+		return (0);
 	if (ft_isalpha(str_env[i]) == 0)
 		return (1);
 	while (str_env[i] != '=' && str_env[i] != '\0')
