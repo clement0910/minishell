@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/05/18 14:45:47 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 17:18:02 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int launch_shell(t_global *glb)
 		// if (ft_strcmp(glb->command->tab_command[0], "exit") == 0)
 		// 	return (0);
 		// ft_free_tab(glb->command->tab_command);
-		print_cursor(glb->ret);
+		show_cursor(glb->ret);
 		if (buff)
 			free(buff);
 	}
@@ -44,7 +44,7 @@ int main(int ac, char **av, char **envp)
 	if (init_var(glb, envp) == 0)
 		return (free_shell(glb));
 	print_welcome();
-	print_cursor(0);
+	show_cursor(0);
 	if (launch_shell(glb) == 0)
 		return (free_shell(glb));
 	return (0);

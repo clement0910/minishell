@@ -6,15 +6,15 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 15:26:15 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 15:28:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 16:29:38 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int check_var_name(char *str_env)
+int	check_var_name(char *str_env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str_env)
@@ -32,7 +32,7 @@ int check_var_name(char *str_env)
 	return (0);
 }
 
-int export_error_msg(char *str_env)
+int	export_error_msg(char *str_env)
 {
 	ft_putstr_fd("minishell: export: '", 1);
 	ft_putstr_fd(str_env, 1);

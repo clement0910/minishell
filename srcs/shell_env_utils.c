@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:32:26 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/10 16:08:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 16:40:49 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int exported_env_len(t_env *env)
 	return (x);
 }
 
-int check_exist_var(char *str_env, t_env *env, int exported)
+int check_exist_var(char *str_env, t_env *env, bool exported)
 {
 	t_env *tmp;
 
@@ -52,7 +52,7 @@ int check_exist_var(char *str_env, t_env *env, int exported)
 		if (ft_strncmp(str_env, ((t_env_var*)tmp->content)->key, ft_strlento(((t_env_var*)tmp->content)->key, '=')) == 0) //TODO: pas sur de ca recheck
 		{
 			if (exported)
-				((t_env_var*)tmp->content)->exported = 1;
+				((t_env_var*)tmp->content)->exported = true;
 			return (1);
 		}
 		tmp = tmp->next;

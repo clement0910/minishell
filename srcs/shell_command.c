@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:45:12 by csapt             #+#    #+#             */
-/*   Updated: 2021/05/18 15:03:31 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 17:11:21 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int	execve_command(char *path_command, char **command, char **envp, int *ret)
 {
-	pid_t pid;
+	pid_t	pid;
 
-	if ((pid = fork()) == -1)
-		return(ret_errno_msg(NULL, 1));
+	pid = fork();
+	if (pid == -1)
+		return (ret_errno_msg(NULL, 1));
 	if (pid == 0)
 	{
-		if ((*ret = execve(path_command, command, envp)) == -1)
+		*ret = execve(path_command, command, envp);
+		if (*ret == -1)
 			exit(*ret);
 	}
 	else
@@ -31,9 +33,9 @@ int	execve_command(char *path_command, char **command, char **envp, int *ret)
 	return (*ret);
 }
 
-char **get_path(char *path)
+char	**get_path(char *path)
 {
-	char **path_tab;
+	char	**path_tab;
 
 	if (!path)
 		return (NULL);
@@ -46,10 +48,10 @@ char **get_path(char *path)
 	return (path_tab);
 }
 
-int check_another_path(char *path, char **path_command, char *command)
+int	check_another_path(char *path, char **path_command, char *command)
 {
-	char *tmp;
-	struct stat file;
+	char		*tmp;
+	struct stat	file;
 
 	if (stat(*path_command, &file) == 0)
 		return (0);
@@ -67,11 +69,11 @@ int check_another_path(char *path, char **path_command, char *command)
 	return (2);
 }
 
-char *search_path_command(t_env *env, char *command, char **path)
+char	*search_path_command(t_env *env, char *command, char **path)
 {
-	int x;
-	int ret;
-	char *path_command;
+	int		x;
+	int		ret;
+	char	*path_command;
 
 	path_command = ft_strdup(command);
 	if (!path_command)
@@ -81,7 +83,7 @@ char *search_path_command(t_env *env, char *command, char **path)
 	{
 		ret = check_another_path(path[x], &path_command, command);
 		if (ret == 1)
-			break;
+			break ;
 		else if (ret == 0)
 			return (path_command);
 		x++;
@@ -90,13 +92,13 @@ char *search_path_command(t_env *env, char *command, char **path)
 	return (NULL);
 }
 
-int launch_command(t_global *glb)
+int	launch_command(t_global *glb)
 {
-	char *command;
-	char *path_command;
-	char **path;
+	char	*command;
+	char	*path_command;
+	char	**path;
 
-	command = glb->p->cmds[0];
+	command = glb->p->cmds[0]; //bug here
 	path = get_path(get_var_value(glb->env, "PATH"));
 	if (!path)
 		return (1);

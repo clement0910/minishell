@@ -50,6 +50,6 @@ int init_var(t_global *glb, char **envp)
 		return (ret_msg("Failed to get env", 0));
 	glb->env = get_env(glb->tab_env);
 	if (!glb->env)
-		return (ret_msg("Failed to get env", 0));
+		return (ret_msg("Failed to get env2", 0));
 	return (1);
 }

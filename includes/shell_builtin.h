@@ -17,7 +17,7 @@
 
 int built_in_command(char *cmd, char **args, t_global *glb);
 
-int	built_in_export(int exported, char *str_env, t_env **env, char ***env_tab);
+int	built_in_export(bool exported, char *str_env, t_env **env, char ***env_tab);
 
 int built_in_env(char **tab_env);
 
