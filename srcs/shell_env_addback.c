@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 15:53:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 11:28:49 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 15:10:14 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int addback_env_value(char *str_env, t_env **env, char ***env_tab, int exported)
 	}
 	else
 	{
-		tmp = ft_strfreejoin(ft_strdupto(str_env, '+'), ft_strchr(str_env, '=') + 1);
+		tmp = ft_strfreejoin(ft_strdupto(str_env, '+'),ft_strchr(str_env, '='));
 		if (!tmp)
 			return (0);
 		if (export_env(tmp, env, env_tab, exported) == 0)

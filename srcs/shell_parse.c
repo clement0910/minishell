@@ -306,7 +306,7 @@ int	parse_command(t_global *glb, char *buff)
             while (cmdsBis && cmdsBis[x])
             {
                 args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
-                if (args && args[0] && built_in_command(args[0], args + 1,
+                if (args && args[0] && built_in_command(args[0], args,
                                                         glb)) {
                     ft_putendl_fd("Unknown command.",1);
                 }

@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/10 18:52:32 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 15:28:55 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ int launch_command(t_global *glb);
 char **create_export_tab(t_env *env);
 char *create_export_env(char *key, char *value);
 int sort_ascii_tab(char **tab);
+
+//OTHERS
+int check_var_name(char *str_env);
+int export_error_msg(char *str_env);
 
 # include "shell_builtin.h"
 

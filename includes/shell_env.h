@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:41:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/10 18:52:32 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 11:29:14 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char**	env_to_tab(t_env *env);
 
 //EXPORT ENV
 int export_var(char *var, t_env **env, char ***env_tab);
-int replace_env_value(char *str_env, t_env *env, char ***env_tab, int exported);
+int replace_env_value(char *str_env, t_env *env, char ***env_tab);
 int export_env(char *str_env, t_env **env, char ***env_tab, int exported);
 int display_export(t_env *env);
 

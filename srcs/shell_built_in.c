@@ -6,23 +6,11 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:21:13 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 12:19:41 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 15:34:38 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-int check_export(char *str_env)
-{
-	int i;
-
-	i = 0;
-	if (!str_env)
-		return (0);
-	if (ft_chrcmp(str_env, '='))
-		return (0);
-	return (ft_isalpha(str_env[i]));
-}
 
 int built_in_hello(void)
 {
@@ -51,7 +39,7 @@ int built_in_command(char *cmd, char **args, t_global *glb)
 		glb->ret = built_in_unset(args[1], &glb->tab_env, &glb->env);
 	else if (ft_strcmp("export", cmd) == 0)
 		glb->ret = built_in_export(1, args[1], &glb->env, &glb->tab_env);
-	else if (check_export(cmd) == 1)
+	else if (ft_chrcmp(cmd, '=') == 0 && check_var_name(cmd) == 0)
 		glb->ret = built_in_export(0, cmd, &glb->env, &glb->tab_env);
     else if (ft_strcmp("exit", cmd) == 0) {
         free_shell(glb);

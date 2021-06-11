@@ -37,6 +37,7 @@ SRCS_FILES =	shell_main.c	\
 				shell_quit.c	\
 				shell_env.c		\
 				shell_env_utils.c \
+				shell_env_name.c \
 				shell_env_addback.c \
 				shell_parse.c	\
 				shell_built_in.c \

@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:42:35 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 11:33:43 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 15:43:26 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int export_var(char *var, t_env **env, char ***env_tab)
 	return (1);
 }
 
-int replace_env_value(char *str_env, t_env *env, char ***env_tab, int exported)
+int replace_env_value(char *str_env, t_env *env, char ***env_tab)
 {
 	t_env *tmp;
 
@@ -49,15 +49,16 @@ int replace_env_value(char *str_env, t_env *env, char ***env_tab, int exported)
 			((t_env_var*)tmp->content)->value = ft_strdup(ft_strchr(str_env, '=') + 1);
 			if (((t_env_var*)tmp->content)->value == NULL)
 				return (0);
+			if (((t_env_var*)tmp->content)->exported)
+			{
+				ft_free_tab(*env_tab);
+				*env_tab = env_to_tab(env);
+				if (!*env_tab)
+					return (0);
+			}
+			break;
 		}
 		tmp = tmp->next;
-	}
-	if (exported)
-	{
-		ft_free_tab(*env_tab);
-		*env_tab = env_to_tab(env);
-		if (!*env_tab)
-			return (0);
 	}
 	return (1);
 }
@@ -97,6 +98,8 @@ int display_export(t_env *env)
 
 int built_in_export(int exported, char *str_env, t_env **env, char ***env_tab)
 {
+	if (check_var_name(str_env) && exported) // exported non mandatory
+		return (export_error_msg(str_env));
 	if (exported && str_env == NULL)
 		return (display_export(*env));
 	if (exported && ft_chrcmp(str_env, '='))
@@ -104,7 +107,7 @@ int built_in_export(int exported, char *str_env, t_env **env, char ***env_tab)
 	if (check_addback(str_env))
 		return (addback_env_value(str_env, env, env_tab, exported));
 	else if (check_exist_var(str_env, *env, exported))
-		return (replace_env_value(str_env, *env, env_tab, exported));
+		return (replace_env_value(str_env, *env, env_tab));
 	else
 		return (export_env(str_env, env, env_tab, exported));
 }
