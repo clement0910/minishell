@@ -58,7 +58,7 @@ int launch_command(t_global *glb);
 
 //EXPORT
 char **create_export_tab(t_env *env);
-char *create_export_env(char *key, char *value);
+char *create_export_env(t_env_var *env);
 int sort_ascii_tab(char **tab);
 
 //OTHERS

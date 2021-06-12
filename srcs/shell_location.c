@@ -6,27 +6,29 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 18:00:20 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/04/29 18:21:10 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 12:58:01 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char *current_path(void)
+char	*current_path(void)
 {
 	char	*res;
 	int		size;
 
 	size = 64;
-	if (!(res = malloc(sizeof(char) * (size + 1))))
-		return (0);
+	res = malloc(sizeof(char) * (size + 1));
+	if (!res)
+		return (NULL);
 	res[size] = '\0';
 	while (!getcwd(res, size))
 	{
 		free(res);
 		size += 8;
-		if (!(res = malloc(sizeof(char) * (size + 1))))
-			return (0);
+		res = malloc(sizeof(char) * (size + 1));
+		if (!res)
+			return (NULL);
 		res[size] = '\0';
 	}
 	return (res);
@@ -34,8 +36,8 @@ char *current_path(void)
 
 char 	*get_latest_folder(char **folders)
 {
-	int i;
-	char *current;
+	int		i;
+	char	*current;
 
 	i = 0;
 	while (folders[i])
@@ -54,9 +56,7 @@ char	*current_folder(void)
 	char	*path;
 	char	**folders;
 	char	*current;
-	int		i;
 
-	i = 0;
 	path = current_path();
 	folders = ft_split(path, '/');
 	free(path);

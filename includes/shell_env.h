@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:41:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 16:44:36 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 12:39:17 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ t_env *get_env(char **envp);
 //UTILS
 char *get_var_value(t_env *env, char *var_name);
 int exported_env_len(t_env *env);
+int exported_tab_env_len(t_env *env);
 int check_exist_var(char *var_name, t_env *env, bool exported);
 char**	env_to_tab(t_env *env);
+int create_tab_env(t_env *env, char **tab);
 
 //EXPORT ENV
 int export_var(char *var, t_env **env, char ***env_tab);
