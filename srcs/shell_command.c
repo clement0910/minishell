@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:45:12 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 17:11:21 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 22:36:36 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ char	*search_path_command(t_env *env, char *command, char **path)
 	return (NULL);
 }
 
-int	launch_command(t_global *glb)
+int	launch_command(t_global *glb, char **cmds)
 {
 	char	*command;
 	char	*path_command;
 	char	**path;
 
-	command = glb->p->cmds[0]; //bug here
+	command = cmds[0]; //bug here
 	path = get_path(get_var_value(glb->env, "PATH"));
 	if (!path)
 		return (1);
@@ -111,7 +111,7 @@ int	launch_command(t_global *glb)
 		ft_free_tab(path);
 		return (0);
 	}
-	execve_command(path_command, glb->p->cmds, glb->tab_env, &glb->ret);
+	execve_command(path_command, cmds, glb->tab_env, &glb->ret);
 	free(path_command);
 	ft_free_tab(path);
 	return (0);
