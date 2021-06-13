@@ -139,20 +139,21 @@ char    *replace_vars(char *str, t_global *glb)
                 replaced = ft_strfreejoin(replaced, ft_itoa(glb->ret));
                 i += 2;
             }
-            else if (tmp[0][1] == '?') {
+            else if (!replaced && tmp[0][1] == '?') {
                 replaced = ft_strdup(ft_itoa(glb->ret));
                 i += 2;
             }
             else {
                 tmpBis = str_clean(tmp[0], "?!\"#$%&\'()*+,-./:;<=>@[\\]^_`{|}~");
-                if (replaced && tmpBis && getenv(tmpBis))
-                    replaced = ft_strfreejoin(replaced, getenv(tmpBis));
+                if (replaced && tmpBis && get_var_value(glb->env, tmpBis))
+                    replaced = ft_strfreejoin(replaced, get_var_value
+                    (glb->env, tmpBis));
                 else if (!replaced && tmpBis)
-                    replaced = ft_strdup(getenv(tmpBis));
+                    replaced = ft_strdup(get_var_value(glb->env, (tmpBis)));
                 i += ft_strlen(tmpBis) + 1;
-                ft_free_tab(tmp);
                 free(tmpBis);
             }
+            ft_free_tab(tmp);
         }
         else {
             if (replaced) {
@@ -245,17 +246,15 @@ int     parse_command(t_global *glb, char *buff)
                 while (args[y])
                 {
                     argsBis[y] = ft_strdup(replace_vars(args[y], glb));
+                    ft_putendl_fd(args[y], 1);
                     y++;
                 }
                 argsBis[y] = NULL;
                 if (argsBis && argsBis[0] && built_in_command(argsBis[0],
-                                                              argsBis
-                + 1,
-                                                        glb)) {
+                                                              argsBis, glb)) {
                     ft_putendl_fd("Unknown command.",1);
                 }
                 ft_free_tab(args);
-                ft_free_tab(argsBis);
                 x++;
             }
             ft_free_tab(cmdsBis);
