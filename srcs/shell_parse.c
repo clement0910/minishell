@@ -47,6 +47,95 @@ char *append_char(char *str, char c)
     return (tmp);
 }
 
+char **strmbtiktok ( char *input, char *delimit, char *openblock, char
+*closeblock) {
+    char **res = NULL;
+    char **tmp;
+    char *t = NULL;
+    char *lead = NULL;
+    char *block = NULL;
+    int iBlock = 0;
+    int iBlockIndex = 0;
+
+    if (input != NULL) {
+        t = input;
+        lead = input;
+    }
+
+    while (lead)
+    {
+        lead = t;
+        if ( *t == '\0') {
+            lead = NULL;
+        }
+        while ( *t != '\0') {
+            if ( iBlock) {
+                if ( closeblock[iBlockIndex] == *t) {
+                    iBlock = 0;
+                }
+                t++;
+                continue;
+            }
+            if ( ( block = strchr ( openblock, *t)) != NULL) {
+                iBlock = 1;
+                iBlockIndex = block - openblock;
+                t++;
+                continue;
+            }
+            if ( strchr ( delimit, *t) != NULL) {
+                if (strchr ( delimit, *t + 1) == NULL)
+                    *t = '\0';
+                else
+                    t++;
+                t++;
+                break;
+            }
+            t++;
+        }
+        //lft_putendl_fd(lead, 1);
+        if (lead && ft_strlen(lead)) {
+            int i = 0;
+            //int x = 0;
+            if (res && res[0] && ft_tablen(res))
+            {
+                tmp = ft_strtabdup(res);
+                ft_free_tab(res);
+                if (!tmp)
+                    ft_putendl_fd("Cannot dup", 1);
+                res = malloc(sizeof(char*) * (ft_tablen(tmp) + 2));
+                while (tmp[i] && tmp[i][0]) {
+                    res[i] = ft_strdup(tmp[i]);
+                    i++;
+                }
+                ft_free_tab(tmp);
+            } else {
+                res = malloc(sizeof(char*) * 2);
+            }
+            res[i++] = ft_strdup(lead);
+            res[i] = NULL;
+        }
+    }
+    return res;
+}
+
+char *str_clean(char *str, char *chars)
+{
+    char    **tmp;
+    int     i;
+
+    tmp = NULL;
+    i = 0;
+    while (chars[i])
+    {
+        if (!tmp)
+            tmp = ft_split(str, chars[i]);
+        else
+            tmp = ft_split(tmp[0], chars[i]);
+        i++;
+    }
+    return tmp[0];
+}
+
 char    *replace_vars(char *str)
 {
     size_t  i;
@@ -54,6 +143,7 @@ char    *replace_vars(char *str)
     char    *replaced;
     char    *replacedTmp;
     char    **tmp;
+    char    *tmpBis;
 
     i = 0;
     replaced = NULL;
@@ -63,13 +153,29 @@ char    *replace_vars(char *str)
     {
         if (str[i] == '$' && i == 0 || str[i] == '$' && str[i - 1] != '\\')
         {
-            tmp = ft_split(str + i,  ' ');
-            if (replaced && tmp && getenv(tmp[0] + 1))
-                replaced = ft_strfreejoin(replaced, getenv(tmp[0] + 1));
+            //ft_putendl_fd("VVVV", 1);
+
+            tmp = ft_split(str + i, ' ');
+            //tmp = strmbtiktok(tmp[0], " $", "", "");
+            tmpBis = str_clean(tmp[0], "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~");
+            ft_putendl_fd(tmp[0], 1);
+            ft_putendl_fd(tmpBis, 1);
+            //tmpBis = ft_split(tmp[0], '"');
+            //tmpBis = ft_split(tmpBis[0], '\'');
+            //tmpBis = strmbtiktok(tmp[0], "\"\'^{}(),.;@#&", "", "");
+            ft_putendl_fd(tmpBis, 1);
+            //ft_putendl_fd("---", 1);
+            //int a = 0;
+            //while (tmpBis[a])
+                //ft_putendl_fd(tmpBis[a++], 1);
+            if (replaced && tmp && getenv(tmpBis))
+                replaced = ft_strfreejoin(replaced, getenv(tmpBis));
             else
                 replaced = ft_strdup(" ");
-            i += ft_strlen(tmp[0]);
+            i += ft_strlen(tmpBis) + 1;
             ft_free_tab(tmp);
+            //ft_free_tab(tmpBis);
+            //ft_putendl_fd("^^^^", 1);
         }
         else {
             if (replaced) {
@@ -107,7 +213,16 @@ char    **replace_vars_tab(char **tab)
         if (!res)
             return NULL;
         while (tab[i]) {
-            res[i] = replace_vars(tab[i]);
+            if (tab[i][0] == '\'') {
+                ft_putendl_fd("if", 1);
+                ft_putendl_fd(tab[i], 1);
+                res[i] = ft_strdup(tab[i]);
+            }
+            else {
+                ft_putendl_fd("else", 1);
+                ft_putendl_fd(tab[i], 1);
+                res[i] = replace_vars(tab[i]);
+            }
             i++;
         }
         res[i] = NULL;
@@ -195,77 +310,6 @@ char *strmbtok ( char *input, char *delimit, char *openblock, char *closeblock) 
         token++;
     }
     return lead;
-}
-
-char **strmbtiktok ( char *input, char *delimit, char *openblock, char
-*closeblock) {
-    char **res = NULL;
-    char **tmp;
-    char *t = NULL;
-    char *lead = NULL;
-    char *block = NULL;
-    int iBlock = 0;
-    int iBlockIndex = 0;
-
-    if (input != NULL) {
-        t = input;
-        lead = input;
-    }
-
-    while (lead)
-    {
-        lead = t;
-        if ( *t == '\0') {
-            lead = NULL;
-        }
-        while ( *t != '\0') {
-            if ( iBlock) {
-                if ( closeblock[iBlockIndex] == *t) {
-                    iBlock = 0;
-                }
-                t++;
-                continue;
-            }
-            if ( ( block = strchr ( openblock, *t)) != NULL) {
-                iBlock = 1;
-                iBlockIndex = block - openblock;
-                t++;
-                continue;
-            }
-            if ( strchr ( delimit, *t) != NULL) {
-                if (strchr ( delimit, *t + 1) == NULL)
-                    *t = '\0';
-                else
-                    t++;
-                t++;
-                break;
-            }
-            t++;
-        }
-        //lft_putendl_fd(lead, 1);
-        if (lead && ft_strlen(lead)) {
-            int i = 0;
-            //int x = 0;
-            if (res && res[0] && ft_tablen(res))
-            {
-                tmp = ft_strtabdup(res);
-                ft_free_tab(res);
-                if (!tmp)
-                    ft_putendl_fd("Cannot dup", 1);
-                res = malloc(sizeof(char*) * (ft_tablen(tmp) + 2));
-                while (tmp[i] && tmp[i][0]) {
-                    res[i] = ft_strdup(tmp[i]);
-                    i++;
-                }
-                ft_free_tab(tmp);
-            } else {
-                res = malloc(sizeof(char*) * 2);
-            }
-            res[i++] = ft_strdup(lead);
-            res[i] = NULL;
-        }
-    }
-    return res;
 }
 
 size_t args_count(char *str)
