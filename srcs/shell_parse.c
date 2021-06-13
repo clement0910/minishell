@@ -12,13 +12,7 @@
 
 #include "shell.h"
 
-// Check quotes closed
-// Check something after && (non space)
-// backslash avant quotes 
-// backslash avant $ (env)
-// If one cmd fail with && stop anb go to next ;
-
-int contain_var(char const *str)
+int     contain_var(char const *str)
 {
     int i;
 
@@ -34,20 +28,7 @@ int contain_var(char const *str)
     return (0);
 }
 
-char *append_char(char *str, char c)
-{
-    char *tmp;
-
-    tmp = malloc(sizeof(char) * (ft_strlen(str) + 2));
-    if (!tmp)
-        return (NULL);
-    tmp = ft_strcpy(str, tmp);
-    tmp[ft_strlen(str)] = c;
-    tmp[ft_strlen(str) + 1] = '\0';
-    return (tmp);
-}
-
-char **strmbtiktok ( char *input, char *delimit, char *openblock, char
+char    **strmbtiktok ( char *input, char *delimit, char *openblock, char
 *closeblock) {
     char **res = NULL;
     char **tmp;
@@ -118,7 +99,7 @@ char **strmbtiktok ( char *input, char *delimit, char *openblock, char
     return res;
 }
 
-char *str_clean(char *str, char *chars)
+char    *str_clean(char *str, char *chars)
 {
     char    **tmp;
     int     i;
@@ -136,7 +117,7 @@ char *str_clean(char *str, char *chars)
     return tmp[0];
 }
 
-char    *replace_vars(char *str)
+char    *replace_vars(char *str, t_global *glb)
 {
     size_t  i;
     size_t  y;
@@ -147,35 +128,31 @@ char    *replace_vars(char *str)
 
     i = 0;
     replaced = NULL;
-    if (!str || !contain_var(str))
+    if (!str || str[0] == '\'' || !contain_var(str))
         return str;
     while (str[i])
     {
         if (str[i] == '$' && i == 0 || str[i] == '$' && str[i - 1] != '\\')
         {
-            //ft_putendl_fd("VVVV", 1);
-
             tmp = ft_split(str + i, ' ');
-            //tmp = strmbtiktok(tmp[0], " $", "", "");
-            tmpBis = str_clean(tmp[0], "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~");
-            ft_putendl_fd(tmp[0], 1);
-            ft_putendl_fd(tmpBis, 1);
-            //tmpBis = ft_split(tmp[0], '"');
-            //tmpBis = ft_split(tmpBis[0], '\'');
-            //tmpBis = strmbtiktok(tmp[0], "\"\'^{}(),.;@#&", "", "");
-            ft_putendl_fd(tmpBis, 1);
-            //ft_putendl_fd("---", 1);
-            //int a = 0;
-            //while (tmpBis[a])
-                //ft_putendl_fd(tmpBis[a++], 1);
-            if (replaced && tmp && getenv(tmpBis))
-                replaced = ft_strfreejoin(replaced, getenv(tmpBis));
-            else
-                replaced = ft_strdup(" ");
-            i += ft_strlen(tmpBis) + 1;
-            ft_free_tab(tmp);
-            //ft_free_tab(tmpBis);
-            //ft_putendl_fd("^^^^", 1);
+            if (replaced && tmp[0][1] == '?') {
+                replaced = ft_strfreejoin(replaced, ft_itoa(glb->ret));
+                i += 2;
+            }
+            else if (tmp[0][1] == '?') {
+                replaced = ft_strdup(ft_itoa(glb->ret));
+                i += 2;
+            }
+            else {
+                tmpBis = str_clean(tmp[0], "?!\"#$%&\'()*+,-./:;<=>@[\\]^_`{|}~");
+                if (replaced && tmpBis && getenv(tmpBis))
+                    replaced = ft_strfreejoin(replaced, getenv(tmpBis));
+                else if (!replaced && tmpBis)
+                    replaced = ft_strdup(getenv(tmpBis));
+                i += ft_strlen(tmpBis) + 1;
+                ft_free_tab(tmp);
+                free(tmpBis);
+            }
         }
         else {
             if (replaced) {
@@ -183,7 +160,7 @@ char    *replace_vars(char *str)
                 free(replaced);
             }
             else
-                replacedTmp = ft_strdup(" ");
+                replacedTmp = ft_strdup("");
             replaced = malloc(sizeof(char) * (ft_strlen(replacedTmp) + 2));
             if (!replaced)
                 ft_putendl_fd("Fucked up\n", 1);
@@ -201,37 +178,7 @@ char    *replace_vars(char *str)
     return replaced;
 }
 
-char    **replace_vars_tab(char **tab)
-{
-    size_t i;
-    char **res;
-
-    res = NULL;
-    if (tab) {
-        i = 0;
-        res = malloc(sizeof(char*) * (ft_tablen(tab) + 1));
-        if (!res)
-            return NULL;
-        while (tab[i]) {
-            if (tab[i][0] == '\'') {
-                ft_putendl_fd("if", 1);
-                ft_putendl_fd(tab[i], 1);
-                res[i] = ft_strdup(tab[i]);
-            }
-            else {
-                ft_putendl_fd("else", 1);
-                ft_putendl_fd(tab[i], 1);
-                res[i] = replace_vars(tab[i]);
-            }
-            i++;
-        }
-        res[i] = NULL;
-        //ft_free_tab(tab);
-    }
-    return res;
-}
-
-int check_and(char const *buff)
+int     check_and(char const *buff)
 {
     size_t 	i;
 
@@ -243,7 +190,7 @@ int check_and(char const *buff)
 	return (0);
 }
 
-int check_quotes(char const *buff)
+int     check_quotes(char const *buff)
 {
 	int i;
 	int singleCnt;
@@ -270,76 +217,19 @@ int check_quotes(char const *buff)
 	return (0);
 }
 
-char *strmbtok ( char *input, char *delimit, char *openblock, char *closeblock) {
-    static char *token = NULL;
-    char *lead = NULL;
-    char *block = NULL;
-    int iBlock = 0;
-    int iBlockIndex = 0;
-
-    if ( input != NULL) {
-        token = input;
-        lead = input;
-    }
-    else {
-        lead = token;
-        if ( *token == '\0') {
-            lead = NULL;
-        }
-    }
-
-    while ( *token != '\0') {
-        if ( iBlock) {
-            if ( closeblock[iBlockIndex] == *token) {
-                iBlock = 0;
-            }
-            token++;
-            continue;
-        }
-        if ( ( block = strchr ( openblock, *token)) != NULL) {
-            iBlock = 1;
-            iBlockIndex = block - openblock;
-            token++;
-            continue;
-        }
-        if ( strchr ( delimit, *token) != NULL) {
-            *token = '\0';
-            token++;
-            break;
-        }
-        token++;
-    }
-    return lead;
-}
-
-size_t args_count(char *str)
-{
-    char *tmp = ft_strdup(str);
-    size_t i;
-
-    i = 0;
-
-    strmbtok ( tmp, " ", "\"\'", "\"\'");
-    while (strmbtok(NULL," ","\"\'","\"\'") !=
-            NULL) {
-        i++;
-    }
-    free(tmp);
-    printf("Args count: %zu\n", i);
-    return i;
-}
-
-int	parse_command(t_global *glb, char *buff)
+int     parse_command(t_global *glb, char *buff)
 {
     int i;
     int x;
+    int y;
     char	**cmds = NULL;
 	char	**cmdsBis = NULL;
 	char	**args = NULL;
+	char	**argsBis = NULL;
 
 	if (!buff || check_quotes(buff) || check_and(buff))
 		return (1);
-	cmds = replace_vars_tab(strmbtiktok(buff, ";", "\"\'", "\"\'")); // LEAK
+	cmds = strmbtiktok(buff, ";", "\"\'", "\"\'");
 	if (cmds)
 	{
         i = 0;
@@ -350,11 +240,22 @@ int	parse_command(t_global *glb, char *buff)
             while (cmdsBis && cmdsBis[x])
             {
                 args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
-                if (args && args[0] && built_in_command(args[0], args + 1,
+                y = 0;
+                argsBis = malloc(sizeof(char*) * (ft_tablen(args) + 1));
+                while (args[y])
+                {
+                    argsBis[y] = ft_strdup(replace_vars(args[y], glb));
+                    y++;
+                }
+                argsBis[y] = NULL;
+                if (argsBis && argsBis[0] && built_in_command(argsBis[0],
+                                                              argsBis
+                + 1,
                                                         glb)) {
                     ft_putendl_fd("Unknown command.",1);
                 }
                 ft_free_tab(args);
+                ft_free_tab(argsBis);
                 x++;
             }
             ft_free_tab(cmdsBis);
