@@ -246,7 +246,6 @@ int     parse_command(t_global *glb, char *buff)
                 while (args[y])
                 {
                     argsBis[y] = ft_strdup(replace_vars(args[y], glb));
-                    ft_putendl_fd(args[y], 1);
                     y++;
                 }
                 argsBis[y] = NULL;
