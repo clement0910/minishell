@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_cursor.c                                     :+:      :+:    :+:   */
+/*   shell_parse_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 17:54:34 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/11 17:17:45 by csapt            ###   ########lyon.fr   */
+/*   Created: 2021/06/13 18:31:39 by csapt             #+#    #+#             */
+/*   Updated: 2021/06/13 18:36:28 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	show_cursor(int ret)
-{
-	char	*folder;
-
-	folder = current_folder();
-	if (ret > 0)
-	{
-		ft_putstr_fd(folder, 1);
-		ft_putstr_fd(" \e[31m>\e[39m ", 1);
-	}
-	else
-	{
-		ft_putstr_fd(folder, 1);
-		ft_putstr_fd(" \e[32m>\e[39m ", 1);
-	}
-	free(folder);
-}
+//char **new_strmbtiktok(char *input, char *delimit, char *openblock, char *closeblock)
+//{
+//	char
+//}

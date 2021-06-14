@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 14:35:40 by csapt             #+#    #+#             */
-/*   Updated: 2021/05/18 14:05:29 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 13:00:43 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void 	free_env(void *content)
 {
 	if (!content)
 		return ;
-	free(((t_env_var*)content)->key);
-	free(((t_env_var*)content)->value);
+	free(((t_env_var *)content)->key);
+	free(((t_env_var *)content)->value);
 	free(content);
 }
 

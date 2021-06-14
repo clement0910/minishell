@@ -6,11 +6,27 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 14:25:11 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 11:47:35 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 13:05:18 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+int	exported_env_len(t_env *env)
+{
+	int		x;
+	t_env	*tmp;
+
+	x = 0;
+	tmp = env;
+	while (tmp)
+	{
+		if (((t_env_var *)tmp->content)->exported == 1)
+			x++;
+		tmp = tmp->next;
+	}
+	return (x);
+}
 
 int	sort_ascii_tab(char **tab)
 {
@@ -33,14 +49,14 @@ int	sort_ascii_tab(char **tab)
 	return (0);
 }
 
-char	*create_export_env(char *key, char *value)
+char	*create_export_env(t_env_var *env)
 {
 	char	*ret;
 
-	if (value == NULL)
-		ret = argv_join("declare -x %s", key);
+	if (env->value == NULL)
+		ret = argv_join("declare -x %s", env->key);
 	else
-		ret = argv_join("declare -x %s=\"%s\"", key, value);
+		ret = argv_join("declare -x %s=\"%s\"", env->key, env->value);
 	if (!ret)
 		return (NULL);
 	else
@@ -62,7 +78,7 @@ char	**create_export_tab(t_env *env)
 	{
 		if (((t_env_var *)tmp->content)->exported == 1)
 		{
-			tab[i] = create_export_env(((t_env_var *)tmp->content)->key, ((t_env_var *)tmp->content)->value);
+			tab[i] = create_export_env((t_env_var *)tmp->content);
 			if (!tab[i])
 			{
 				ft_free_tab(tab);

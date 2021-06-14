@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/10 18:02:54 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 14:32:13 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,9 +306,9 @@ int	parse_command(t_global *glb, char *buff)
             while (cmdsBis && cmdsBis[x])
             {
                 args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
-                if (args && args[0] && built_in_command(args[0], args + 1,
+                if (args && args[0] && built_in_command(args[0], args,
                                                         glb)) {
-                    ft_putendl_fd("Unknown command.",1);
+                    ft_putendl_fd("Error command",1);
                 }
                 ft_free_tab(args);
                 x++;

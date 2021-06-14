@@ -6,14 +6,14 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 17:47:28 by csapt             #+#    #+#             */
-/*   Updated: 2021/04/27 17:47:49 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 16:04:24 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int built_in_env(char **tab_env)
+int	built_in_env(char **tab_env)
 {
 	print_tab(tab_env);
-	return (1);
+	return (0);
 }

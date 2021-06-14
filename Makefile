@@ -37,6 +37,7 @@ SRCS_FILES =	shell_main.c	\
 				shell_quit.c	\
 				shell_env.c		\
 				shell_env_utils.c \
+				shell_env_name.c \
 				shell_env_addback.c \
 				shell_parse.c	\
 				shell_built_in.c \
@@ -47,7 +48,9 @@ SRCS_FILES =	shell_main.c	\
 				built_in_unset.c	\
 				shell_command.c \
                 built_in_ls.c \
-                shell_sort_export.c 
+                shell_sort_export.c \
+                new_built_in_echo.c \
+                shell_parse_utils.c
 
 SRCS = $(SRCS_FILES)
 
@@ -87,6 +90,8 @@ all: premake
 premake: $(OBJS_DIR) libmake_libft
 	@$(MAKE) -s $(NAME) --no-print-directory COUNT=1
 
+debug:
+	gcc -g3 -fsanitize=address srcs/*.c libft/srcs/*/*.c -I includes -I libft/includes -o Minishell
 libmake_libft:
 	@cd $(LFT_DIR) && $(MAKE) -s
 
