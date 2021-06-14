@@ -47,14 +47,14 @@ int 	ret_errno_msg(char *msg, int ret);
 int 	free_shell(t_global *glb);
 int 	ret_msg(char *msg, int ret);
 void 	free_env(void *content);
-void 	unknow_command_msg(char *command);
+void 	unknown_command_msg(char *command);
 
 //SHELL COMMAND
 int	execve_command(char *path_command, char **command, char **envp, int *ret);
 char **get_path(char *path);
 int check_another_path(char *path, char **path_command, char *command);
 char *search_path_command(t_env *env, char *command, char **path);
-int launch_command(t_global *glb);
+int launch_command(t_global *glb, char **cmds);
 
 //EXPORT
 char **create_export_tab(t_env *env);

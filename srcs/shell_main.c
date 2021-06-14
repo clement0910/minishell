@@ -24,8 +24,8 @@ int launch_shell(t_global *glb)
 	{
 		if (get_next_line(0, &buff) == -1)
 			return (ret_errno_msg("get_next_line error", 0));
-		cmds = parse_command(glb, buff);
 		if (buff && buff[0] && cmds) {
+            cmds = parse_command(glb, buff);
             i = 0;
             while (cmds[i])
             {
@@ -36,7 +36,7 @@ int launch_shell(t_global *glb)
                     (cmds[i][y][0],
                                                                   cmds[i][y],
                                                                   glb)) {
-                        ft_putendl_fd("Unknown command",1);
+                        launch_command(glb, cmds[i][y]);
                     }
                     ft_free_tab(cmds[i][y]);
                     if (glb->ret)
@@ -46,11 +46,10 @@ int launch_shell(t_global *glb)
                 free(cmds[i]);
                 i++;
             }
+            free(cmds);
+            free(buff);
         }
-        free(cmds);
-		print_cursor(glb->ret);
-		if (buff)
-			free(buff);
+        print_cursor(glb->ret);
 	}
 }
 

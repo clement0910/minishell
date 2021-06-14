@@ -90,27 +90,29 @@ char *search_path_command(t_env *env, char *command, char **path)
 	return (NULL);
 }
 
-int launch_command(t_global *glb)
+int    launch_command(t_global *glb, char **cmds)
 {
-	char *command;
-	char *path_command;
-	char **path;
+    char    *command;
+    char    *path_command;
+    char    **path;
 
-	command = glb->p->cmds[0];
-	path = get_path(get_var_value(glb->env, "PATH"));
-	if (!path)
-		return (1);
-	path_command = search_path_command(glb->env, command, path);
-	if (!path_command)
-	{
-		glb->ret = 127;
-		unknow_command_msg(command);
-		free(path_command);
-		ft_free_tab(path);
-		return (0);
-	}
-	execve_command(path_command, glb->p->cmds, glb->tab_env, &glb->ret);
-	free(path_command);
-	ft_free_tab(path);
-	return (0);
+    if (!glb || !cmds)
+        return (1);
+    command = cmds[0]; //bug here
+    path = get_path(get_var_value(glb->env, "PATH"));
+    if (!path)
+        return (1);
+    path_command = search_path_command(glb->env, command, path);
+    if (!path_command)
+    {
+        glb->ret = 127;
+        unknown_command_msg(command);
+        free(path_command);
+        ft_free_tab(path);
+        return (0);
+    }
+    execve_command(path_command, cmds, glb->tab_env, &glb->ret);
+    free(path_command);
+    ft_free_tab(path);
+    return (0);
 }
