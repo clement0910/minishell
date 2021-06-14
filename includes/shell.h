@@ -34,7 +34,7 @@ int init_var(t_global *glb, char **envp);
 char *current_path(void);
 char *get_latest_folder(char **folders);
 char*current_folder(void);
-void	show_cursor(int ret);
+void	print_cursor(int ret);
 void print_welcome(void);
 
 // Parse
@@ -63,8 +63,6 @@ int sort_ascii_tab(char **tab);
 int check_var_name(char *str_env);
 int export_error_msg(char *str_env);
 
-//ECHO
-int new_built_in_echo(char **argv);
 # include "shell_builtin.h"
 
 #endif

@@ -102,7 +102,7 @@ char	**func_3(char *lead, char **tab)
 	return (ret);
 }
 
-char	**strmbtok_v2(char *input, char *delimit, char *openblock, char *closeblock)
+char	**strmbtok(char *input, char *delimit, char *openblock, char *closeblock)
 {
 	char	**tab;
 	char	*lead;

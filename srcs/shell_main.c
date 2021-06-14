@@ -65,7 +65,7 @@ int main(int ac, char **av, char **envp)
 	if (init_var(glb, envp))
 		return (free_shell(glb));
 	print_welcome();
-	show_cursor(0);
+	print_cursor(0);
 	if (launch_shell(glb))
 		return (free_shell(glb));
 	return (0);

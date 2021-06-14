@@ -25,9 +25,6 @@ int 	free_shell(t_global *glb)
 {
 	ft_lst_clear(&glb->env, free_env);
 	ft_free_tab(glb->tab_env);
-	if (glb->p)
-		ft_free_tab(glb->p->cmds);
-	free(glb->p);
 	free(glb);
 	return (1); //need to ret glb->ret
 }

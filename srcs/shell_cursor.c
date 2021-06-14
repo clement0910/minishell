@@ -12,19 +12,21 @@
 
 #include "shell.h"
 
-void	show_cursor(int ret)
+void	print_cursor(int ret)
 {
 	char	*folder;
 
 	folder = current_folder();
 	if (ret > 0)
 	{
-		ft_putstr_fd(folder, 1);
+		if (folder)
+			ft_putstr_fd(folder, 1);
 		ft_putstr_fd(" \e[31mX\e[39m ", 1);
 	}
 	else
 	{
-		ft_putstr_fd(folder, 1);
+		if (folder)
+			ft_putstr_fd(folder, 1);
 		ft_putstr_fd(" \e[32m>\e[39m ", 1);
 	}
 	free(folder);

@@ -237,7 +237,7 @@ char**** parse_command(t_global *glb, char *buff)
         i = 0;
         while (cmds[i])
         {
-            cmdsBis = strtiktok(cmds[i], "&", "\"\'", "\"\'");
+            cmdsBis = strmbtok(cmds[i], "&", "\"\'", "\"\'");
             res[i] = malloc(sizeof(char**) * (ft_tablen(cmdsBis) + 1)); // RES
             x = 0;
             while (cmdsBis && cmdsBis[x])

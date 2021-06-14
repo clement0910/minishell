@@ -42,9 +42,6 @@ int	increment_shlvl(char **tab_env)
 
 int	init_var(t_global *glb, char **envp)
 {
-	glb->p = ft_calloc(1, sizeof(t_parse));
-	if (!glb->p)
-		return (ret_errno_msg(NULL, 1));
 	glb->tab_env = ft_strtabdup(envp);
 	if (!glb->tab_env)
 		return (ret_errno_msg(NULL, 1));
