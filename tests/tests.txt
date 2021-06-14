@@ -3,3 +3,5 @@ echo "Going in $HOME" && cd $HOME && echo "We are in home."; echo "Going in $PWD
 echo "Going in $HOME " && cd $HOME && echo "We are in home."; echo "Going in $PWD " && cd $PWD && echo "We are in Minishell folder."
 echo '\'\'\'\'
 echo "&" && echo ";"; echo " "
+
+echo ".$HOME. ;$HOME; @HOME@ #HOME#"

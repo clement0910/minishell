@@ -39,14 +39,14 @@ void	show_cursor(int ret);
 void print_welcome(void);
 
 // Parse
-int 	parse_command(t_global *glb, char *buff);
+char**** parse_command(t_global *glb, char *buff);
 
 //QUIT SHELL
 int 	ret_errno_msg(char *msg, int ret);
 int 	free_shell(t_global *glb);
 int 	ret_msg(char *msg, int ret);
 void 	free_env(void *content);
-void 	unknow_command_msg(char *command);
+void 	unknown_command_msg(char *command);
 
 //SHELL COMMAND
 int	execve_command(char *path_command, char **command, char **envp, int *ret);
