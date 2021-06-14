@@ -20,7 +20,7 @@ void	print_cursor(int ret) //modifier name
 	if (ret)
 	{
 		ft_putstr_fd(folder, 1);
-		ft_putstr_fd(" \e[31m>\e[39m ", 1);
+		ft_putstr_fd(" \e[31mX\e[39m ", 1);
 	}
 	else
 	{
