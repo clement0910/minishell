@@ -254,6 +254,7 @@ int     parse_command(t_global *glb, char *buff)
                     ft_putendl_fd("Unknown command.",1);
                 }
                 ft_free_tab(args);
+                ft_free_tab(argsBis);
                 x++;
             }
             ft_free_tab(cmdsBis);
