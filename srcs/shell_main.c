@@ -55,7 +55,7 @@ int launch_shell(t_global *glb)
             free(cmds);
             free(buff);
         }
-        show_cursor(glb->ret);
+        print_cursor(glb->ret);
 	}
 }
 
