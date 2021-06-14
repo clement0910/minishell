@@ -22,7 +22,6 @@
 
 typedef struct s_global
 {
-	t_parse *p;
 	t_env	*env;
 	char 	**tab_env;
 	int		ret;
