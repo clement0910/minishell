@@ -12,44 +12,50 @@
 
 #include "shell.h"
 
+void handle_commands(t_global *glb, char ****cmds)
+{
+    int i;
+    int y;
+
+    i = 0;
+    while (cmds[i])
+    {
+        y = 0;
+        while (cmds[i][y])
+        {
+            if (cmds[i][y] && cmds[i][y][0] && built_in_command
+                    (cmds[i][y][0],
+                     cmds[i][y],
+                     glb)) {
+                launch_command(glb, cmds[i][y]);
+            }
+            ft_free_tab(cmds[i][y]);
+            if (glb->ret)
+                break;
+            y++;
+        }
+        free(cmds[i]);
+        i++;
+    }
+}
+
 int launch_shell(t_global *glb)
 {
 	char *buff;
     char ****cmds;
-    int i;
-    int y;
 
 	buff = NULL;
 	while (1)
 	{
 		if (get_next_line(0, &buff) == -1)
 			return (ret_errno_msg("get_next_line error", 0));
-		if (buff && buff[0] && cmds) {
+		if (buff && buff[0]) {
             cmds = parse_command(glb, buff);
-            i = 0;
-            while (cmds[i])
-            {
-                y = 0;
-                while (cmds[i][y])
-                {
-                    if (cmds[i][y] && cmds[i][y][0] && built_in_command
-                    (cmds[i][y][0],
-                                                                  cmds[i][y],
-                                                                  glb)) {
-                        launch_command(glb, cmds[i][y]);
-                    }
-                    ft_free_tab(cmds[i][y]);
-                    if (glb->ret)
-                        break;
-                    y++;
-                }
-                free(cmds[i]);
-                i++;
-            }
+            handle_commands(glb, cmds);
             free(cmds);
             free(buff);
         }
-        print_cursor(glb->ret);
+        show_cursor(glb->ret);
 	}
 }
 
