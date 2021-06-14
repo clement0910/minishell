@@ -40,7 +40,7 @@ void	print_cursor(int ret);
 void print_welcome(void);
 
 // Parse
-int 	parse_command(t_global *glb, char *buff);
+char**** parse_command(t_global *glb, char *buff);
 
 //QUIT SHELL
 int 	ret_errno_msg(char *msg, int ret);

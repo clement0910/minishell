@@ -218,52 +218,51 @@ int     check_quotes(char const *buff)
 	return (0);
 }
 
-int     parse_command(t_global *glb, char *buff)
+char**** parse_command(t_global *glb, char *buff)
 {
     int i;
     int x;
     int y;
     char	**cmds = NULL;
-	char	**cmdsBis = NULL;
-	char	**args = NULL;
-	char	**argsBis = NULL;
+    char	**cmdsBis = NULL;
+    char	**args = NULL;
+    char	****res = NULL;
 
-	if (!buff || check_quotes(buff) || check_and(buff))
-		return (1);
-	cmds = strmbtiktok(buff, ";", "\"\'", "\"\'");
-	if (cmds)
-	{
+    if (!buff || check_quotes(buff) || check_and(buff))
+        return (NULL);
+    cmds = strmbtiktok(buff, ";", "\"\'", "\"\'");
+    res = malloc(sizeof(char***) * (ft_tablen(cmds) + 1)); // RES
+    if (cmds)
+    {
         i = 0;
         while (cmds[i])
         {
             cmdsBis = strmbtiktok(cmds[i], "&", "\"\'", "\"\'");
+            res[i] = malloc(sizeof(char**) * (ft_tablen(cmdsBis) + 1)); // RES
             x = 0;
             while (cmdsBis && cmdsBis[x])
             {
                 args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
                 y = 0;
-                argsBis = malloc(sizeof(char*) * (ft_tablen(args) + 1));
+                res[i][x] = malloc(sizeof(char*) * (ft_tablen(args) + 1));
                 while (args[y])
                 {
                     if (replace_vars(args[y], glb))
-                        argsBis[y] = ft_strdup(replace_vars(args[y], glb));
+                        res[i][x][y] = ft_strdup(replace_vars(args[y], glb));
                     else
-                        argsBis[y] = ft_strdup("");
+                        res[i][x][y] = ft_strdup("");
                     y++;
                 }
-                argsBis[y] = NULL;
-                if (argsBis && argsBis[0] && built_in_command(argsBis[0],
-                                                              argsBis, glb)) {
-                    ft_putendl_fd("Unknown command.",1);
-                }
+                res[i][x][y] = NULL;
                 ft_free_tab(args);
-                ft_free_tab(argsBis);
                 x++;
             }
+            res[i][x] = NULL;
             ft_free_tab(cmdsBis);
             i++;
         }
+        res[i] = NULL;
     }
-	ft_free_tab(cmds);
-    return (0);
+    ft_free_tab(cmds);
+    return (res);
 }

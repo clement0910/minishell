@@ -15,17 +15,39 @@
 int launch_shell(t_global *glb)
 {
 	char *buff;
+    char ****cmds;
+    int i;
+    int y;
 
 	buff = NULL;
 	while (1)
 	{
 		if (get_next_line(0, &buff) == -1)
 			return (ret_errno_msg("get_next_line error", 0));
-		if (buff && buff[0] && parse_command(glb, buff))
-			return (ret_msg("Parsing error.", 0)); //TODO: check error msg
-		// if (ft_strcmp(glb->command->tab_command[0], "exit") == 0)
-		// 	return (0);
-		// ft_free_tab(glb->command->tab_command);
+		cmds = parse_command(glb, buff);
+		if (buff && buff[0] && cmds) {
+            i = 0;
+            while (cmds[i])
+            {
+                y = 0;
+                while (cmds[i][y])
+                {
+                    if (cmds[i][y] && cmds[i][y][0] && built_in_command
+                    (cmds[i][y][0],
+                                                                  cmds[i][y],
+                                                                  glb)) {
+                        ft_putendl_fd("Unknown command",1);
+                    }
+                    ft_free_tab(cmds[i][y]);
+                    if (glb->ret)
+                        break;
+                    y++;
+                }
+                free(cmds[i]);
+                i++;
+            }
+        }
+        free(cmds);
 		print_cursor(glb->ret);
 		if (buff)
 			free(buff);
