@@ -49,7 +49,6 @@ SRCS_FILES =	shell_main.c	\
 				shell_command.c \
                 built_in_ls.c \
                 shell_sort_export.c \
-                new_built_in_echo.c \
                 shell_parse_utils.c
 
 SRCS = $(SRCS_FILES)
@@ -128,6 +127,3 @@ fclean: clean_without_lib lib_fclean
 	@$(PRINT) "\033[1;34m%-20s\033[1;33m%-25s\033[0;32m[OK]\033[0m\n" "Cleaning executable" "$(NAME)"
 
 re: fclean all
-
-debug:
-	gcc -g3 -fsanitize=address srcs/*.c libft/srcs/*/*.c -I includes -I libft/includes -o Minishell

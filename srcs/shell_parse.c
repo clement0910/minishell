@@ -230,19 +230,19 @@ char**** parse_command(t_global *glb, char *buff)
 
     if (!buff || check_quotes(buff) || check_and(buff))
         return (NULL);
-    cmds = strmbtiktok(buff, ";", "\"\'", "\"\'");
+    cmds = strmbtok(buff, ";", "\"\'", "\"\'");
     res = malloc(sizeof(char***) * (ft_tablen(cmds) + 1)); // RES
     if (cmds)
     {
         i = 0;
         while (cmds[i])
         {
-            cmdsBis = strmbtiktok(cmds[i], "&", "\"\'", "\"\'");
+            cmdsBis = strmbtok(cmds[i], "&", "\"\'", "\"\'");
             res[i] = malloc(sizeof(char**) * (ft_tablen(cmdsBis) + 1)); // RES
             x = 0;
             while (cmdsBis && cmdsBis[x])
             {
-                args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
+                args = strmbtok(cmdsBis[x], " ", "\"\'", "\"\'");
                 y = 0;
                 res[i][x] = malloc(sizeof(char*) * (ft_tablen(args) + 1));
                 while (args[y])

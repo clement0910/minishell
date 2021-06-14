@@ -1,86 +1,150 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in_echo.c                                    :+:      :+:    :+:   */
+/*   new_built_in_echo.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 14:42:10 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/04/29 14:42:13 by rolaforg         ###   ########lyon.fr   */
+/*   Created: 2021/06/12 15:54:33 by csapt             #+#    #+#             */
+/*   Updated: 2021/06/12 22:27:42 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		quote_mode(char *str)
+void print_echo_str(char *str)
 {
-	if (str)
+	char tmp;
+	int i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i] != '\0')
 	{
-		if (str[0] == 34 || str[0] == 39)
-			return (str[0]);
-	}
-	return (0);
-}
-
-unsigned int begin_with(char *str, char *prefix) // TODO Move in another file
-{
-        unsigned int    i;
-        unsigned int    size;
-
-        i = 0;
-        if (!str || !prefix)
-                return (0);
-        size = ft_strlen(prefix);
-        while (str[i] && prefix[i])
-        {
-                if (str[i] == prefix[i])
-                {
-                        i++;
-                        if (i == size)
-						{
-							while (ft_isws(str[i]))
-								i++;
-                            return (i);
-						}
-                }
-                else
-                        return (0);
-        }
-        return (0);
-}
-
-int	built_in_echo(char **args)
-{
-	int	x;
-	int	i;
-	int	jump;
-	int	skip;
-
-	x = 0;
-	if (!args || !args[0])
-	    return (0);
-	if (args[0])
-		jump = begin_with(args[0], "-n");
-	else
-		jump = 0;
-
-	while (args[x])
-	{
-        //ft_putendl_fd(args[x], 1);
-		i = 0;
-		skip = quote_mode(args[x]);
-		if ((x > 0 && !jump) || (jump && x > 1))
-			write(1, " ", 1);
-		while (args[x][i] && (!jump || (jump && x > 0)))
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (!skip || (args[x][i] != skip && args[x][i - 1] != '\\') ||
-			(args[x][i] == '\\' && args[x][i - 1] == '\\'))
-				write(1, &args[x][i], 1);
+			tmp = str[i];
+			i++;
+			while (str[i] != tmp && str[i] != '\0')
+			{
+				while (str[i] == '\\')
+				{
+					i++;
+					write(1, &str[i], 1);
+					if (str[i])
+						i++;
+				}
+				write(1, &str[i], 1);
+				i++;
+			}
+			if (str[i] != '\0')
+				i++;
+		}
+		while ((str[i] != '\'' && str[i] != '\"') && str[i])
+		{
+			while (str[i] == '\\')
+			{
+				i++;
+				write(1, &str[i], 1);
+				if (str[i])
+					i++;
+			}
+			ft_putchar_fd(str[i], 1);
 			i++;
 		}
-		x++;
 	}
-	if (!jump)
+}
+
+void	print_str_echo(char *str)
+{
+	int i;
+	char sign;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'' && str[i])
+			{
+				ft_putchar_fd(str[i], 1);
+				i++;
+			}
+		}
+		else if (str[i] == '\"')
+		{
+			i++;
+			while (str[i] != '\"' && str[i])
+			{
+				if (str[i] == '\\')
+				{
+					if (str[i + 1] != '\"')
+					{
+						ft_putchar_fd(str[i], 1);
+						i++;
+					}
+					else
+						i++;
+					while (str[i] == '\\')
+					{
+						i++;
+						if (str[i] == '\\') {
+							ft_putchar_fd(str[i], 1);
+							i++;
+						}
+						else
+							break ;
+					}
+				}
+				ft_putchar_fd(str[i], 1);
+				i++;
+			}
+		}
+		while ((str[i] != '\'' && str[i] != '\"') && str[i])
+		{
+			if (str[i] == '\\')
+			{
+				while (str[i] == '\\')
+				{
+					i++;
+					if (str[i] == '\\') {
+						ft_putchar_fd(str[i], 1);
+						i++;
+					}
+					else
+						break ;
+				}
+			}
+			ft_putchar_fd(str[i], 1);
+			i++;
+		}
+	}
+}
+
+int built_in_echo(char **argv)
+{
+	int i;
+	bool newline;
+
+	i = 0;
+	newline = true;
+	if (!argv || !argv[0])
+		return (0);
+	if (ft_strcmp(argv[0], "-n") == 0)
+	{
+		newline = false;
+		i++;
+	}
+	while (argv[i])
+	{
+		print_str_echo(argv[i]);
+		i++;
+	}
+	if (newline)
 		write(1, "\n", 1);
 	return (0);
 }
