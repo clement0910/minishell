@@ -30,8 +30,6 @@ int	built_in_command(char *cmd, char **args, t_global *glb)
 		glb->ret = built_in_ls();
 	else if (ft_strcmp("echo", cmd) == 0)
 		glb->ret = built_in_echo(args + 1);
-	else if (ft_strcmp("necho", cmd) == 0)
-		glb->ret = new_built_in_echo(args + 1);
 	else if (ft_strcmp("cd", cmd) == 0)
 		glb->ret = built_in_cd(args[1], glb->env, &glb->tab_env);
 	else if (ft_strcmp("hello", cmd) == 0)

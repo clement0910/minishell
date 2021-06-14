@@ -47,9 +47,8 @@ int 	ret_msg(char *msg, int ret)
 	return (ret);
 }
 
-void 	unknow_command_msg(char *command)
+void 	unknown_command_msg(char *command)
 {
-	ft_putstr_fd("minishell: ", 1);
 	ft_putstr_fd(command, 1);
 	ft_putendl_fd(": command not found", 1);
 }
