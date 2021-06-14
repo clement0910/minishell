@@ -29,10 +29,11 @@ int increment_shlvl(char **tab_env)
 			tab_env[i] = argv_join("SHLVL=%s", tmp);
 			if (!tab_env[i])
 			{
-				free(tmp);
-				return (1);
+                free(tmp);
+                return (1);
 			}
-		}
+            free(tmp);
+        }
 		i++;
 	}
 	return (0);

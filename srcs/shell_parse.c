@@ -148,7 +148,7 @@ char    *replace_vars(char *str, t_global *glb)
                 if (replaced && tmpBis && get_var_value(glb->env, tmpBis))
                     replaced = ft_strfreejoin(replaced, get_var_value
                     (glb->env, tmpBis));
-                else if (!replaced && tmpBis)
+                else if (!replaced && tmpBis && get_var_value(glb->env, (tmpBis)))
                     replaced = ft_strdup(get_var_value(glb->env, (tmpBis)));
                 i += ft_strlen(tmpBis) + 1;
                 free(tmpBis);
@@ -245,7 +245,10 @@ int     parse_command(t_global *glb, char *buff)
                 argsBis = malloc(sizeof(char*) * (ft_tablen(args) + 1));
                 while (args[y])
                 {
-                    argsBis[y] = ft_strdup(replace_vars(args[y], glb));
+                    if (replace_vars(args[y], glb))
+                        argsBis[y] = ft_strdup(replace_vars(args[y], glb));
+                    else
+                        argsBis[y] = ft_strdup("");
                     y++;
                 }
                 argsBis[y] = NULL;
