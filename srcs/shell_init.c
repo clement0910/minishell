@@ -32,6 +32,7 @@ int	increment_shlvl(char **tab_env)
 				free(tmp);
 				return (1);
 			}
+			free(tmp);
 			break ;
 		}
 		i++;
