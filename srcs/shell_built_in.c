@@ -23,9 +23,6 @@ int	built_in_command(char *cmd, char **args, t_global *glb)
 {
 	if (!cmd)
 		return (glb->ret);
-	printf("cmd:%s\n", cmd);
-	print_tab(args + 1);
-	printf("--------------------\n");
 	if (ft_strcmp("ls", cmd) == 0)
 		glb->ret = built_in_ls();
 	else if (ft_strcmp("echo", cmd) == 0)

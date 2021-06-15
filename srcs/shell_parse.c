@@ -206,7 +206,6 @@ char**** parse_command(t_global *glb, char *buff)
     char	**args = NULL;
     char	****res = NULL;
 
-    printf("%s\n", buff);
     if (!buff || check_quotes_and_backslash(buff) || check_and(buff))
         return (NULL);
     cmds = strmbtok(buff, ";", "\"\'", "\"\'");
