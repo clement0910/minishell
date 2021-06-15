@@ -6,34 +6,37 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 18:31:39 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/13 18:36:28 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 16:20:56 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	func_2(char *openblock, char **input, int *iBlock, int *iBlockIndex)
+int	check_block(char *openblock, char **input, int *iBlock, int *iBlockIndex)
 {
 	char	*block;
 
 	block = NULL;
 	block = ft_strchr(openblock, **input);
+	if (**input == '\0')
+		return (1);
 	if (block != NULL)
 	{
 		*iBlock = 1;
 		*iBlockIndex = block - openblock;
 		(*input)++;
 	}
-	return ;
+	if (**input == '\0')
+		return (1);
+	return (0);
 }
 
-void	func_1(char **input, char *openblock, char *closeblock, char *delimit)
+void	delimit_command(char **input, char *openblock, char *closeblock, char *delimit)
 {
 	int	iBlock;
 	int	iBlockIndex;
 
 	iBlock = 0;
-	iBlockIndex = 0;
 	while (**input != '\0')
 	{
 		if (iBlock)
@@ -42,7 +45,8 @@ void	func_1(char **input, char *openblock, char *closeblock, char *delimit)
 				iBlock = 0;
 			(*input)++;
 		}
-		func_2(openblock, input, &iBlock, &iBlockIndex);
+		if (check_block(openblock, input, &iBlock, &iBlockIndex))
+			break ;
 		if (ft_strchr(delimit, **input) != NULL)
 		{
 			if (ft_strchr(delimit, **input + 1) == NULL)
@@ -56,7 +60,7 @@ void	func_1(char **input, char *openblock, char *closeblock, char *delimit)
 	}
 }
 
-char	**func_4(char *lead, char **tab, int *i)
+char	**tab_command_add(char **tab, int *i)
 {
 	char	**tmp;
 	char	**ret;
@@ -80,7 +84,7 @@ char	**func_4(char *lead, char **tab, int *i)
 	return (ret);
 }
 
-char	**func_3(char *lead, char **tab)
+char	**create_command_tab(char *lead, char **tab)
 {
 	int		i;
 	char	**tmp;
@@ -90,7 +94,7 @@ char	**func_3(char *lead, char **tab)
 	if (lead && ft_strlen(lead)) //pourquoi verifier 2x ?
 	{
 		if (tab && tab[0] && ft_tablen(tab))
-			ret = func_4(lead, tab, &i);
+			ret = tab_command_add(tab, &i);
 		else
 			ret = malloc(sizeof(char *) * 2);
 		ret[i] = ft_strdup(lead);
@@ -106,7 +110,7 @@ char	**strmbtok(char *input, char *delimit, char *openblock, char *closeblock)
 {
 	char	**tab;
 	char	*lead;
-	char	*tmp;
+
 
 	tab = NULL;
 	if (input != NULL)
@@ -116,8 +120,8 @@ char	**strmbtok(char *input, char *delimit, char *openblock, char *closeblock)
 		lead = input;
 		if (*input == '\0')
 			lead = NULL;
-		func_1(&input, openblock, closeblock, delimit);
-		tab = func_3(lead, tab);
+		delimit_command(&input, openblock, closeblock, delimit);
+		tab = create_command_tab(lead, tab);
 	}
 	return (tab);
 }

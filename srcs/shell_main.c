@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/12 12:58:45 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 14:19:31 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void handle_commands(t_global *glb, char ****cmds)
     int y;
 
     i = 0;
+    if (cmds == NULL)
+    	return ;
     while (cmds[i])
     {
         y = 0;
@@ -29,6 +31,7 @@ void handle_commands(t_global *glb, char ****cmds)
                      glb)) {
                 launch_command(glb, cmds[i][y]);
             }
+
             ft_free_tab(cmds[i][y]);
             if (glb->ret)
                 break;
@@ -51,6 +54,8 @@ int launch_shell(t_global *glb)
 			return (ret_errno_msg("get_next_line error", 0));
 		if (buff && buff[0]) {
             cmds = parse_command(glb, buff);
+            if (!cmds)
+            	return (1);
             handle_commands(glb, cmds);
             free(cmds);
             free(buff);
