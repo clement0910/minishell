@@ -6,55 +6,11 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 15:54:33 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/12 22:27:42 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 16:43:35 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-void print_echo_str(char *str)
-{
-	char tmp;
-	int i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			tmp = str[i];
-			i++;
-			while (str[i] != tmp && str[i] != '\0')
-			{
-				while (str[i] == '\\')
-				{
-					i++;
-					write(1, &str[i], 1);
-					if (str[i])
-						i++;
-				}
-				write(1, &str[i], 1);
-				i++;
-			}
-			if (str[i] != '\0')
-				i++;
-		}
-		while ((str[i] != '\'' && str[i] != '\"') && str[i])
-		{
-			while (str[i] == '\\')
-			{
-				i++;
-				write(1, &str[i], 1);
-				if (str[i])
-					i++;
-			}
-			ft_putchar_fd(str[i], 1);
-			i++;
-		}
-	}
-}
 
 void	print_str_echo(char *str)
 {
@@ -74,6 +30,7 @@ void	print_str_echo(char *str)
 				ft_putchar_fd(str[i], 1);
 				i++;
 			}
+			i++;
 		}
 		else if (str[i] == '\"')
 		{
