@@ -14,5 +14,5 @@
 # define SHELL_PARSE_H
 
 char **strmbtok(char *input, char *delimit, char *openblock, char *closeblock);
-
+int check_quotes_and_backslash(const char* buff);
 #endif

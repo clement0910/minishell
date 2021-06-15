@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/15 16:43:35 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 17:40:27 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,79 +122,6 @@ int     check_and(char const *buff)
 		return (1);
 	return (0);
 }
-
-int     check_quotes(char const *buff)
-{
-	int i;
-	int singleCnt;
-	int	doubleCnt;
-
-	i = 0;
-    singleCnt = 0;
-    doubleCnt = 0;
-
-	while (buff[i])
-	{
-		if (buff[i] == '\'' && (buff[i - 1] != '\\' || (buff[i - 1] == '\\' && buff[i - 2] == '\\')) && singleCnt < 2)
-			singleCnt++;
-		else if (buff[i] == '\'' && (buff[i - 1] != '\\' || (buff[i - 1] == '\\' && buff[i - 2] == '\\')) && singleCnt == 2)
-			singleCnt = 1;
-		else if (buff[i] == '"' && (buff[i - 1] != '\\' || (buff[i - 1] == '\\' && buff[i - 2] == '\\')) && doubleCnt < 2)
-			doubleCnt++;
-		else if (buff[i] == '"' && (buff[i - 1] != '\\' || (buff[i - 1] == '\\' && buff[i - 2] == '\\')) && doubleCnt == 2)
-			doubleCnt = 1;
-		i++;
-	}
-	if (singleCnt == 1 || doubleCnt == 1)
-		return (1);
-	return (0);
-}
-
-int check_quotes_and_backslash(char const *buff)
-{
-	int i;
-
-	i = 0;
-	while (buff[i])
-	{
-		if (buff[i] == '\\')
-		{
-			i++;
-			if (buff[i] == '\0')
-				return (1);
-			else
-				i++;
-		}
-		if (buff[i] == '\'')
-		{
-			i++;
-			while (buff[i] != '\'')
-			{
-				if (buff[i] == '\0')
-					return (1);
-				i++;
-			}
-			i++;
-		}
-		if (buff[i] == '\"')
-		{
-			i++;
-			if (buff[i] == '\\')
-					i += 2;
-			while (buff[i] != '\"')
-			{
-				if (buff[i] == '\0')
-					return (1);
-				i++;
-			}
-			i++;
-		}
-		if (buff[i] != '\0' && (buff[i] != '\'' && buff[i] != '\"' && buff[i] != '\\'))
-			i++;
-	}
-	return (0);
-}
-
 
 char**** parse_command(t_global *glb, char *buff)
 {

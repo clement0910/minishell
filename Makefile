@@ -49,7 +49,8 @@ SRCS_FILES =	shell_main.c	\
 				shell_command.c \
                 built_in_ls.c \
                 shell_sort_export.c \
-                shell_parse_utils.c
+                shell_parse_utils.c \
+                shell_parse_quotes.c
 
 SRCS = $(SRCS_FILES)
 
