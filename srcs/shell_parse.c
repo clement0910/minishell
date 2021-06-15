@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/11 14:32:13 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 16:43:35 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,76 +28,6 @@ int     contain_var(char const *str)
     return (0);
 }
 
-char    **strmbtiktok ( char *input, char *delimit, char *openblock, char
-*closeblock) {
-    char **res = NULL;
-    char **tmp;
-    char *t = NULL;
-    char *lead = NULL;
-    char *block = NULL;
-    int iBlock = 0;
-    int iBlockIndex = 0;
-
-    if (input != NULL) {
-        t = input;
-        lead = input;
-    }
-
-    while (lead)
-    {
-        lead = t;
-        if ( *t == '\0') {
-            lead = NULL;
-        }
-        while ( *t != '\0') {
-            if ( iBlock) {
-                if ( closeblock[iBlockIndex] == *t) {
-                    iBlock = 0;
-                }
-                t++;
-                continue;
-            }
-            if ( ( block = strchr ( openblock, *t)) != NULL) {
-                iBlock = 1;
-                iBlockIndex = block - openblock;
-                t++;
-                continue;
-            }
-            if ( strchr ( delimit, *t) != NULL) {
-                if (strchr ( delimit, *t + 1) == NULL)
-                    *t = '\0';
-                else
-                    t++;
-                t++;
-                break;
-            }
-            t++;
-        }
-        //lft_putendl_fd(lead, 1);
-        if (lead && ft_strlen(lead)) {
-            int i = 0;
-            //int x = 0;
-            if (res && res[0] && ft_tablen(res))
-            {
-                tmp = ft_strtabdup(res);
-                ft_free_tab(res);
-                if (!tmp)
-                    ft_putendl_fd("Cannot dup", 1);
-                res = malloc(sizeof(char*) * (ft_tablen(tmp) + 2));
-                while (tmp[i] && tmp[i][0]) {
-                    res[i] = ft_strdup(tmp[i]);
-                    i++;
-                }
-                ft_free_tab(tmp);
-            } else {
-                res = malloc(sizeof(char*) * 2);
-            }
-            res[i++] = ft_strdup(lead);
-            res[i] = NULL;
-        }
-    }
-    return res;
-}
 
 char    *str_clean(char *str, char *chars)
 {
@@ -184,9 +114,11 @@ int     check_and(char const *buff)
     size_t 	i;
 
 	i = ft_strlen(buff) - 1;
+	if (i <= 0)
+		return (0);
 	while (buff[i] && ft_isws(buff[i]))
 		i--;
-	if (buff[i - 1] == '&' && buff[i] == '&')
+	if (buff[i] == '&')
 		return (1);
 	return (0);
 }
@@ -218,6 +150,52 @@ int     check_quotes(char const *buff)
 	return (0);
 }
 
+int check_quotes_and_backslash(char const *buff)
+{
+	int i;
+
+	i = 0;
+	while (buff[i])
+	{
+		if (buff[i] == '\\')
+		{
+			i++;
+			if (buff[i] == '\0')
+				return (1);
+			else
+				i++;
+		}
+		if (buff[i] == '\'')
+		{
+			i++;
+			while (buff[i] != '\'')
+			{
+				if (buff[i] == '\0')
+					return (1);
+				i++;
+			}
+			i++;
+		}
+		if (buff[i] == '\"')
+		{
+			i++;
+			if (buff[i] == '\\')
+					i += 2;
+			while (buff[i] != '\"')
+			{
+				if (buff[i] == '\0')
+					return (1);
+				i++;
+			}
+			i++;
+		}
+		if (buff[i] != '\0' && (buff[i] != '\'' && buff[i] != '\"' && buff[i] != '\\'))
+			i++;
+	}
+	return (0);
+}
+
+
 char**** parse_command(t_global *glb, char *buff)
 {
     int i;
@@ -228,21 +206,22 @@ char**** parse_command(t_global *glb, char *buff)
     char	**args = NULL;
     char	****res = NULL;
 
-    if (!buff || check_quotes(buff) || check_and(buff))
+    printf("%s\n", buff);
+    if (!buff || check_quotes_and_backslash(buff) || check_and(buff))
         return (NULL);
-    cmds = strmbtiktok(buff, ";", "\"\'", "\"\'");
+    cmds = strmbtok(buff, ";", "\"\'", "\"\'");
     res = malloc(sizeof(char***) * (ft_tablen(cmds) + 1)); // RES
     if (cmds)
     {
         i = 0;
         while (cmds[i])
         {
-            cmdsBis = strmbtiktok(cmds[i], "&", "\"\'", "\"\'");
+            cmdsBis = strmbtok(cmds[i], "&", "\"\'", "\"\'");
             res[i] = malloc(sizeof(char**) * (ft_tablen(cmdsBis) + 1)); // RES
             x = 0;
             while (cmdsBis && cmdsBis[x])
             {
-                args = strmbtiktok(cmdsBis[x], " ", "\"\'", "\"\'");
+                args = strmbtok(cmdsBis[x], " ", "\"\'", "\"\'");
                 y = 0;
                 res[i][x] = malloc(sizeof(char*) * (ft_tablen(args) + 1));
                 while (args[y])

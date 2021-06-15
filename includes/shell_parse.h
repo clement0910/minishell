@@ -13,9 +13,6 @@
 #ifndef SHELL_PARSE_H
 # define SHELL_PARSE_H
 
-typedef struct s_parse
-{
-	char **cmds;
-}				t_parse;
+char **strmbtok(char *input, char *delimit, char *openblock, char *closeblock);
 
 #endif

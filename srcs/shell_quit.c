@@ -25,9 +25,6 @@ int 	free_shell(t_global *glb)
 {
 	ft_lst_clear(&glb->env, free_env);
 	ft_free_tab(glb->tab_env);
-	if (glb->p)
-		ft_free_tab(glb->p->cmds);
-	free(glb->p);
 	free(glb);
 	return (1); //need to ret glb->ret
 }
@@ -49,6 +46,7 @@ int 	ret_msg(char *msg, int ret)
 
 void 	unknown_command_msg(char *command)
 {
+	ft_putstr_fd("minishell: ", 1);
 	ft_putstr_fd(command, 1);
 	ft_putendl_fd(": command not found", 1);
 }
