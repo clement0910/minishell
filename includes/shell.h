@@ -19,6 +19,7 @@
 # include <string.h>
 # include <sys/errno.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 typedef struct s_global
 {

@@ -6,11 +6,23 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/15 16:43:35 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 19:52:04 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+
+void sigint_signal(int num)
+{
+	write(1, "\n", 1);
+	print_cursor(1);
+}
+
+void sigkill_signal(int num)
+{
+	(void)num;
+}
 
 void handle_commands(t_global *glb, char ****cmds)
 {
@@ -50,6 +62,8 @@ int launch_shell(t_global *glb)
 	buff = NULL;
 	while (1)
 	{
+		signal(2, sigint_signal);
+		signal(3, sigkill_signal);
 		if (get_next_line(0, &buff) == -1)
 			return (ret_errno_msg("get_next_line error", 0));
 		if (buff && buff[0]) {
