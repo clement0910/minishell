@@ -42,7 +42,6 @@ SRCS_FILES =	shell_main.c	\
 				shell_parse.c	\
 				shell_built_in.c \
 				shell_init.c	\
-				shell_utils.c	\
 				built_in_export.c	\
 				built_in_env.c	\
 				built_in_unset.c	\

@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 18:31:39 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/15 16:20:56 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 15:11:59 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	check_block(char *openblock, char **input, int *iBlock, int *iBlockIndex)
 	return (0);
 }
 
-void	delimit_command(char **input, char *openblock, char *closeblock, char *delimit)
+void	delimit_command(char **input, char *openblock,
+					 char *closeblock, char *delimit)
 {
 	int	iBlock;
 	int	iBlockIndex;
@@ -91,7 +92,7 @@ char	**create_command_tab(char *lead, char **tab)
 	char	**ret;
 
 	i = 0;
-	if (lead && ft_strlen(lead)) //pourquoi verifier 2x ?
+	if (lead && ft_strlen(lead))
 	{
 		if (tab && tab[0] && ft_tablen(tab))
 			ret = tab_command_add(tab, &i);
@@ -106,11 +107,11 @@ char	**create_command_tab(char *lead, char **tab)
 	return (ret);
 }
 
-char	**strmbtok(char *input, char *delimit, char *openblock, char *closeblock)
+char	**strmbtok(char *input, char *delimit,
+				char *openblock, char *closeblock)
 {
 	char	**tab;
 	char	*lead;
-
 
 	tab = NULL;
 	if (input != NULL)

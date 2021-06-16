@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/15 19:52:04 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 15:21:19 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,26 @@ void sigint_signal(int num)
 	print_cursor(1);
 }
 
-void sigkill_signal(int num)
+int read_line(char **buff)
 {
-	(void)num;
+	char tmp[3];
+	char *tmp2;
+
+	if (read(0, tmp, 1) == 0)
+	{
+		ft_putendl_fd("exit", 1);
+		*buff = ft_strdup("exit");
+	}
+	else if (tmp[0] == '\n')
+		*buff = ft_strdup("");
+	else
+	{
+		tmp[1] = '\0';
+		if (get_next_line(0, &tmp2) == -1)
+			return (ret_errno_msg("get_next_line error", 1));
+		*buff = ft_strjoin(tmp, tmp2);
+		free(tmp2);
+	}
 }
 
 void handle_commands(t_global *glb, char ****cmds)
@@ -63,9 +80,7 @@ int launch_shell(t_global *glb)
 	while (1)
 	{
 		signal(2, sigint_signal);
-		signal(3, sigkill_signal);
-		if (get_next_line(0, &buff) == -1)
-			return (ret_errno_msg("get_next_line error", 0));
+		read_line(&buff);
 		if (buff && buff[0]) {
             cmds = parse_command(glb, buff);
             if (!cmds)
@@ -74,7 +89,7 @@ int launch_shell(t_global *glb)
             free(cmds);
             free(buff);
         }
-        print_cursor(glb->ret);
+		print_cursor(glb->ret);
 	}
 }
 

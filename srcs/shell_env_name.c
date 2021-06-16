@@ -37,5 +37,5 @@ int	export_error_msg(char *str_env)
 	ft_putstr_fd("minishell: export: '", 1);
 	ft_putstr_fd(str_env, 1);
 	ft_putendl_fd("': not a valid identifier", 1);
-	return (1);
+	return (0);
 }

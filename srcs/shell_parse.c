@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/15 17:40:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 13:09:11 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ char**** parse_command(t_global *glb, char *buff)
     char	**args = NULL;
     char	****res = NULL;
 
-    printf("%s\n", buff);
     if (!buff || check_quotes_and_backslash(buff) || check_and(buff))
         return (NULL);
     cmds = strmbtok(buff, ";", "\"\'", "\"\'");
@@ -143,7 +142,7 @@ char**** parse_command(t_global *glb, char *buff)
         i = 0;
         while (cmds[i])
         {
-            cmdsBis = strmbtok(cmds[i], "&", "\"\'", "\"\'");
+            cmdsBis = strmbtok(cmds[i], "|", "\"\'", "\"\'");
             res[i] = malloc(sizeof(char**) * (ft_tablen(cmdsBis) + 1)); // RES
             x = 0;
             while (cmdsBis && cmdsBis[x])
