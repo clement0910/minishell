@@ -37,7 +37,13 @@ char		*current_folder(void);
 void		print_cursor(int ret);
 void		print_welcome(void);
 
-char		****parse_command(t_global *glb, char *buff);
+// Parse
+char**** parse_command(t_global *glb, char *buff);
+void fill_replaced1(t_global *glb, char **replaced, char *str, int *i);
+void fill_replaced2(t_global *glb, char **replaced, char c);
+void	fill_res(t_global *glb, char ***res, char *cmdsBis, int x);
+void	fill_res1(t_global *glb, char ****res, char *cmds, int i);
+char	*replace_vars(char *str, t_global *glb);
 
 int			ret_errno_msg(char *msg, int ret);
 int			free_shell(t_global *glb);
@@ -55,8 +61,12 @@ int			check_another_path(char *path, char **path_command, char *command);
 char		*search_path_command(t_env *env, char *command, char **path);
 int			launch_command(t_global *glb, char **cmds);
 
-int			modify_shlvl(char **tab_env);
-int			increment_shlvl(char ***tab_env);
+//OTHERS
+int check_var_name(char *str_env);
+int export_error_msg(char *str_env);
+int	extract_len(char **tab);
+char	**extract_cmds(char **tab);
+char	**extract_redirs(char **tab);
 
 void		sigint_signal(int num);
 int			read_line(char **buff);
