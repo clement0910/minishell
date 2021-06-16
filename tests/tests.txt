@@ -1,7 +1,0 @@
-echo "Going in home..." && cd $HOME && echo "We are in home." && ls; echo "Going Minishell folder..." && cd $PWD && echo "We are in Minishell folder." && ls
-echo "Going in $HOME" && cd $HOME && echo "We are in home."; echo "Going in $PWD" && cd $PWD && echo "We are in Minishell folder."
-echo "Going in $HOME " && cd $HOME && echo "We are in home."; echo "Going in $PWD " && cd $PWD && echo "We are in Minishell folder."
-echo '\'\'\'\'
-echo "&" && echo ";"; echo " "
-
-echo ".$HOME. ;$HOME; @HOME@ #HOME#"

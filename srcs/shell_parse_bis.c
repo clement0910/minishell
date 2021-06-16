@@ -25,7 +25,7 @@ void	fill_res1(t_global *glb, char ****res, char *cmds, int i)
 	int		x;
 	char	**cmdsBis;
 
-	cmdsBis = strmbtok(cmds, "&", "\"\'", "\"\'");
+	cmdsBis = strmbtok(cmds, "|", "\"\'", "\"\'");
 	res[i] = malloc(sizeof(char **) * (ft_tablen(cmdsBis) + 1));
 	x = 0;
 	while (cmdsBis && cmdsBis[x])
@@ -83,7 +83,7 @@ void	fill_replaced1(t_global *glb, char **replaced, char *str, int *i)
 	ft_free_tab(tmp);
 }
 
-void	fill_replaced2(t_global *glb, char **replaced, char c)
+void	fill_replaced2(char **replaced, char c)
 {
 	int		y;
 	char	*replacedTmp;

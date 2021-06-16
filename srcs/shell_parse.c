@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:03:06 by rolaforg          #+#    #+#             */
-/*   Updated: 2021/06/16 13:09:11 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:09:05 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ char	*replace_vars(char *str, t_global *glb)
 		return (str);
 	while (str[i])
 	{
-		if (str[i] == '$' && i == 0 || str[i] == '$' && str[i - 1] != '\\')
+		if (((str[i] == '$') && (i == 0))
+			|| ((str[i] == '$') && (str[i - 1] != '\\')))
 		{
 			fill_replaced1(glb, &replaced, str, &i);
 		}
 		else
 		{
-			fill_replaced2(glb, &replaced, str[i]);
+			fill_replaced2(&replaced, str[i]);
 			i++;
 		}
 	}

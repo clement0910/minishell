@@ -51,7 +51,8 @@ SRCS_FILES =	shell_main.c	\
                 built_in_ls.c \
                 shell_sort_export.c \
                 shell_parse_utils.c \
-                shell_parse_quotes.c
+                shell_parse_quotes.c	\
+				shell_signal.c
 
 SRCS = $(SRCS_FILES)
 
@@ -81,7 +82,7 @@ ERASE_FULLLINE := \e[2K
 
 #global variable
 
-CC = clang
+CC = clang -Wall -Wextra -Werror
 CFLAGS = -O0
 RM = /bin/rm -rf
 PRINT = printf

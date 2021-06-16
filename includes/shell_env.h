@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 15:41:59 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/16 15:18:54 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:00:51 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			display_export(t_env *env);
 
 int			addback_env(t_env_var *env_var, t_env **env);
 int			addback_env_value(char *str_env, t_env **env,
-						char ***env_tab, bool exported);
+				char ***env_tab, bool exported);
 int			addback_value(char *str_env, t_env *env, char ***env_tab);
 int			check_addback(const char *str_env);
 
@@ -55,5 +55,5 @@ int			check_var_name(char *str_env);
 int			export_error_msg(char *str_env);
 
 void		delete_from_env(t_env **tmp, t_env **tmp_next,
-						t_env **before_tmp, t_env **env);
+				t_env **before_tmp, t_env **env);
 #endif

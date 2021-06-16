@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:31:34 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/16 15:21:19 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 19:54:07 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-void    sigint_signal(int num)
-{
-    write(1, "\n", 1);
-    print_cursor(1);
-}
-
-int read_line(char **buff)
-{
-	char tmp[3];
-	char *tmp2;
-
-	if (read(0, tmp, 1) == 0)
-	{
-		ft_putendl_fd("exit", 1);
-		*buff = ft_strdup("exit");
-	}
-	else if (tmp[0] == '\n')
-		*buff = ft_strdup("");
-	else
-	{
-		tmp[1] = '\0';
-		if (get_next_line(0, &tmp2) == -1)
-			return (ret_errno_msg("get_next_line error", 1));
-		*buff = ft_strjoin(tmp, tmp2);
-		free(tmp2);
-	}
-}
 
 void	launch_commands(t_global *glb, char **args)
 {
@@ -106,7 +78,7 @@ int	launch_shell(t_global *glb)
 	while (1)
 	{
 		signal(2, sigint_signal);
-        read_line(&buff);
+		read_line(&buff);
 		if (buff && buff[0])
 		{
 			cmds = parse_command(glb, buff);

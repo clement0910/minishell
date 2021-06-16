@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_builtin.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:20:43 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/16 15:17:17 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:00:23 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <dirent.h>
 
 int		built_in_export(bool exported, char *str_env,
-					 t_env **env, char ***env_tab);
+			t_env **env, char ***env_tab);
 
 int		built_in_env(char **tab_env);
 

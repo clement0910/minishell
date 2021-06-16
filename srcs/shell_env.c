@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:10:30 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 17:28:55 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:02:38 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_env_var	*get_env_var_null(char *var)
 
 int	env_to_lst(t_env **env, char *envp)
 {
-	t_env		*tmp;
 	t_env_var	*env_var;
 
 	if (*env == NULL)

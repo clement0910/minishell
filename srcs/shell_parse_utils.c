@@ -6,7 +6,7 @@
 /*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 18:31:39 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/16 15:11:59 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:08:01 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char	**tab_command_add(char **tab, int *i)
 char	**create_command_tab(char *lead, char **tab)
 {
 	int		i;
-	char	**tmp;
 	char	**ret;
 
 	i = 0;
@@ -113,6 +112,7 @@ char	**strmbtok(char *input, char *delimit,
 	char	**tab;
 	char	*lead;
 
+	lead = NULL;
 	tab = NULL;
 	if (input != NULL)
 		lead = input;

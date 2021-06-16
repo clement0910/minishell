@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: csapt <csapt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:42:35 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/11 16:50:27 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 20:05:26 by csapt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	export_var(char *var, t_env **env, char ***env_tab)
 {
-	t_env		*lst;
 	t_env_var	*env_var;
 
 	if (check_exist_var(var, *env, true))
@@ -66,7 +65,6 @@ int	replace_env_value(char *str_env, t_env *env, char ***env_tab)
 
 int	export_env(char *str_env, t_env **env, char ***env_tab, bool exported)
 {
-	t_env		*lst;
 	t_env_var	*env_var;
 
 	env_var = get_env_var(str_env, exported);
