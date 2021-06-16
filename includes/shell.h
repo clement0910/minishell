@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/12 16:10:18 by csapt            ###   ########lyon.fr   */
+/*   Updated: 2021/06/16 18:03:40 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void print_welcome(void);
 
 // Parse
 char**** parse_command(t_global *glb, char *buff);
+void fill_replaced1(t_global *glb, char **replaced, char *str, int *i);
+void fill_replaced2(t_global *glb, char **replaced, char c);
+void	fill_res(t_global *glb, char ***res, char *cmdsBis, int x);
+void	fill_res1(t_global *glb, char ****res, char *cmds, int i);
+char	*replace_vars(char *str, t_global *glb);
 
 //QUIT SHELL
 int 	ret_errno_msg(char *msg, int ret);
