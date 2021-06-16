@@ -6,7 +6,7 @@
 /*   By: rolaforg <rolaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 19:33:02 by csapt             #+#    #+#             */
-/*   Updated: 2021/06/16 18:03:40 by                  ###   ########.fr       */
+/*   Updated: 2021/06/16 18:06:01 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ int sort_ascii_tab(char **tab);
 //OTHERS
 int check_var_name(char *str_env);
 int export_error_msg(char *str_env);
+int	extract_len(char **tab);
+char	**extract_cmds(char **tab);
+char	**extract_redirs(char **tab);
 
 # include "shell_builtin.h"
 
